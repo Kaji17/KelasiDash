@@ -10,6 +10,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class NavBarComponent implements OnInit {
   items!: MenuItem[];
+  icons: string='pi pi-bars'
 
   dispas: boolean= false
   constructor(private route: Router) {}
@@ -29,12 +30,21 @@ export class NavBarComponent implements OnInit {
   }
 
   show(): boolean{
-    console.log(this.dispas=!this.dispas)
-    return this.dispas!=this.dispas
+    console.log(this.dispas)
+    if (this.dispas) {
+      this.dispas= false
+      this.icons = 'pi pi-bars'
+    } else {
+      this.dispas= true
+this.icons= 'pi pi-times'
+    }
+
+    return this.dispas
   }
 
   onNav(url: string) {
     this.route.navigate([url]);
+    this.dispas = true
   }
 
   onViewProfile(){
