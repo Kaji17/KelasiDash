@@ -1,0 +1,27 @@
+.active {
+  color: #ffdc0e;
+}
+
+.sup {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .sup {
+    display: flex;
+  }
+  .dispa {
+    display: none;
+  }
+  .navContent2{
+    display: none;
+  }
+}
+
+.affiche{
+    top: 80px;
+    opacity: 100;
+}
+.cache{
+    top: -400px;
+    opacity: 0;
+}

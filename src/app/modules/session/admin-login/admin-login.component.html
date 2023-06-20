@@ -1,0 +1,78 @@
+<div class="flex items-center justify-center min-h-full" style="color: white">
+  <div class="contentL flex items-center justify-center content-center">
+    <h1 class="text-center text-3xl">CONNEXION</h1>
+
+    <!-- FORMULAIRE DE CONNEXION -->
+    <form class="flex items-center" >
+      <!-- INPUT EMAIL -->
+      <div class="p-float-label">
+        <input
+          formControlName="email"
+          required
+          type="text"
+          id="inputtext"
+          class="no-border-on-focus"
+          pInputText
+          [(ngModel)]="value"
+          style="
+            background-color: transparent;
+            border-bottom: 1.5px solid white;
+            border-top: 0;
+            border-left: 0;
+            border-right: 0;
+            border-radius: 0;
+            padding: 8px 0;
+            color: white;
+            width: 222px;
+            margin: 10px 0;
+            font-weight: bold;
+          "
+        />
+        <label for="inputtext" style="color: white; left: 0">Email</label>
+      </div>
+
+      <!-- INPUT MOT DE PASSE -->
+      <div class="p-float-label mt-5">
+        <input
+        formControlName="password"
+          type="text"
+          id="inputtext"
+          class="no-border-on-focus"
+          pInputText
+          [(ngModel)]="value1"
+          style="
+            background-color: transparent;
+            border-bottom: 1.5px solid white;
+            border-top: 0;
+            border-left: 0;
+            border-right: 0;
+            border-radius: 0;
+            padding: 8px 0;
+            color: white;
+            font-weight: bold;
+            width: 222px;
+            margin: 10px 0;
+          "
+        />
+        <label for="inputtext" style="color: white; left: 0"
+          >Mot de passe</label
+        >
+      </div>
+
+      <!-- Button de soumission de formulaire -->
+      <p-button
+        label="Connexion"
+        [loading]="loading"
+        (click)="load()"
+        class="mt-8"
+      ></p-button>
+    </form>
+  </div>
+  <div class="contentR">
+    <img
+      src="assets/img/undraw_Authentication_re_svpt__1_-removebg-preview.png"
+      alt=""
+      srcset=""
+    />
+  </div>
+</div>

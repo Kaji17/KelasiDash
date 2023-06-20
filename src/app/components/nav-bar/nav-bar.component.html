@@ -1,0 +1,111 @@
+<header>
+  <nav
+    class="p-5 md:flex md:items-center md:justify-evenly bg-blueDark shadow text-white"
+  >
+    <div class="flex cursor-pointer navContent">
+      <img
+        class="h-12"
+        src="assets/img/chapeau-de-graduation-et-diplome.png"
+        alt="LogoKelasi"
+      />
+      <div class="flex ps-5" style="flex-direction: column">
+        <h1 style="font-size: 26px">KELASI</h1>
+        <p class="text-yellow" style="font-size: 10px">MTN CONGO</p>
+      </div>
+
+      <span class="w-full flex justify-end items-center">
+        <button
+        [style]="{
+            border: 'none',
+            outline: 'none',
+            padding: '5px 0'
+          }"
+        class="p-button-text p-button-plain mr-1 mb-1 headBut flex place-items-start items-center md:hidden"
+        type="button"
+        pButton
+        icon="pi pi-bars"
+        (click)="show()"
+      > </button>
+      </span>
+      <p-divider layout="vertical" class="ms-3 dispa md:hidden"></p-divider>
+      <ul
+        class="md:flex md:items-center md:z-auto md:static 
+        absolute bg-blueDark top-[5.5rem] 
+        left-0 w-full md:w-auto opacity-0 
+        md:opacity-100 md:top-[-400px] 
+        transition-all ease-in-duration-500"
+
+        [ngClass]="dispas?'affiche':''"
+      >
+        <li class="mx-4 my-6 md:my-0">
+          <a
+            class="text-grey hover:text-yellow duration-300"
+            routerLink="/administration/dash-board"
+            routerLinkActive="active"
+            >Dashboard</a
+          >
+        </li>
+        <li class="mx-4 my-6 md:my-0">
+          <a
+            class="text-grey hover:text-yellow duration-300"
+            routerLink="/administration/history"
+            routerLinkActive="active"
+            >Historique</a
+          >
+        </li>
+        <li class="mx-4 my-6 md:my-0">
+          <a
+            class="text-grey hover:text-yellow duration-300"
+            routerLink="/administration/statistiques"
+            routerLinkActive="active"
+            >Statisttiques</a
+          >
+        </li>
+        <li class="mx-4 my-6 md:my-0 sup">
+          <a
+            class="text-grey hover:text-yellow duration-300"
+            routerLink="/administration/statistiques"
+            routerLinkActive="active"
+            >Aller sur profil</a
+          >
+        </li>
+        <li class="mx-4 my-6 md:my-0 sup">
+          <a
+            class="text-grey hover:text-yellow duration-300"
+            routerLink="/session"
+            routerLinkActive="active"
+            >Se déconnecter</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="flex mx-4 my-6 md:my-0 navContent2">
+      <p-avatar
+        label="P"
+        size="large"
+        shape="circle"
+        class="me-3 dispa"
+      ></p-avatar>
+      <div class="flex dispa" style="flex-direction: column">
+        <h1>Cody Fisher</h1>
+        <p style="font-size: 10px" class="text-grey">123-123-123</p>
+      </div>
+      <div>
+        <button
+          [style]="{
+            'vertical-align': 'middle',
+            border: 'none',
+            outline: 'none',
+            padding: '5px 0'
+          }"
+          class="p-button-text p-button-plain mr-1 mb-1 headBut flex place-items-start dispa"
+          type="button"
+          pButton
+          icon="pi pi-angle-down"
+          (click)="menu.toggle($event)"
+        ></button>
+        <p-menu #menu [popup]="true" [model]="items"></p-menu>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,21 @@
+main{
+    display: flex;
+    align-items: center;
+}
+.no-border-on-focus:focus{
+    outline: none!important;
+    border-right: none!important;
+    border-top: none!important;
+    border-left: none!important;
+}
+.contentL{
+    flex-direction: column;
+    h1{
+        margin-bottom: 50px;
+    }
+}
+
+
+form{
+    flex-direction: column;
+}
