@@ -19,6 +19,7 @@ import { TableModule } from 'primeng/table';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { TagModule } from 'primeng/tag';
 import { SessionRoutingModule } from '../session/session-routing.module';
+import { ProfilComponent } from './profil/profil.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { SessionRoutingModule } from '../session/session-routing.module';
     StatModePaiementStatusComponent,
     StatModePaiementChiffreAffaireComponent,
     StatExamenStatusComponent,
-    StatExamenChiffreAffaireComponent
+    StatExamenChiffreAffaireComponent,
+    ProfilComponent
   ],
   imports: [
     CommonModule,
