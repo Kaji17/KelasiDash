@@ -3,7 +3,7 @@
     <h1 class="text-center text-3xl">CONNEXION</h1>
 
     <!-- FORMULAIRE DE CONNEXION -->
-    <form class="flex items-center" >
+    <form class="flex items-center" [formGroup]="formSignUp">
       <!-- INPUT EMAIL -->
       <div class="p-float-label">
         <input
@@ -64,7 +64,10 @@
         label="Connexion"
         [loading]="loading"
         (click)="load()"
-        class="mt-8"
+        class="mt-8 btnSession"
+        [style]="{'background-color':'transparent!important', 'color':'#ffffff!important', 'border-color': 'white!important',
+        'cursor': 'pointer', 'border-radius': '30px !important', 'width':' 229px','height': '52px','text-align': 'center'
+      }"
       ></p-button>
     </form>
   </div>
@@ -74,5 +77,11 @@
       alt=""
       srcset=""
     />
+  </div>
+
+  <div class="flex absolute container bottom-3 text-center pied" style="flex-direction: column">
+    <h1 style="font-size: 26px">KELASI</h1>
+    <p class="text-[#FFDC0E]" style="font-size: 10px">MTN CONGO</p>
+    <p>Copyright &copy; KYRMANN 2023 </p>
   </div>
 </div>
