@@ -25,3 +25,26 @@
     top: -400px;
     opacity: 0;
 }
+
+.p-button.p-button-text.p-button-plain:enabled:active {
+  background: transparent!important;
+  outline: none!important;
+  border: none!important;
+}
+
+.p-button.p-button-text.p-button-plain:enabled:focus {
+  border-color:transparent!important;
+  box-shadow: 0 0 0 2px transparent!important;
+}
+
+.p-button.p-button-text:enabled:hover {
+  background: transparent!important;
+  color: white!important;
+  border-color: transparent!important;
+}
+
+.p-button:enabled:hover {
+  background: white !important;
+  color: #07506a !important;
+  border-color: #07506a !important;
+}
