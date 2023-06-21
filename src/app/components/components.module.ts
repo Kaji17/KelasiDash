@@ -8,20 +8,33 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { MenuModule } from 'primeng/menu';
 import {ButtonModule} from 'primeng/button';
-
+import { TableauComponent } from './tableau/tableau.component';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { TagModule } from 'primeng/tag';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [NavBarComponent, PaginationComponent],
+  declarations: [NavBarComponent, PaginationComponent, TableauComponent],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     DividerModule,
-    AppRoutingModule,
+    // AppRoutingModule,
     AvatarModule,
     AvatarGroupModule,
     MenuModule,
-    ButtonModule
+    ButtonModule,
+    TableModule,
+    InputTextModule,
+    CalendarModule,
+    DropdownModule,
+    TagModule
   ],
-  exports: [NavBarComponent, PaginationComponent],
+  exports: [NavBarComponent, PaginationComponent,TableauComponent],
 })
 export class ComponentsModule {}
