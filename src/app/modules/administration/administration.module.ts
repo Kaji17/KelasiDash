@@ -10,7 +10,15 @@ import { StatModePaiementChiffreAffaireComponent } from './statistique/stat-mode
 import { StatExamenStatusComponent } from './statistique/stat-examen-status/stat-examen-status.component';
 import { StatExamenChiffreAffaireComponent } from './statistique/stat-examen-chiffre-affaire/stat-examen-chiffre-affaire.component';
 import { AdministrationRoutingModule } from './administration-routing.module';
-
+import { ButtonModule } from 'primeng/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { TagModule } from 'primeng/tag';
+import { SessionRoutingModule } from '../session/session-routing.module';
 
 
 @NgModule({
@@ -27,7 +35,15 @@ import { AdministrationRoutingModule } from './administration-routing.module';
   ],
   imports: [
     CommonModule,
-    AdministrationRoutingModule
+    AdministrationRoutingModule,
+    ComponentsModule,
+    ButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    CalendarModule,
+    DropdownModule,
+    TableModule
   ]
 })
 export class AdministrationModule { }
