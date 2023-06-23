@@ -1,1 +1,74 @@
-<p>dashoard</p>
+<section class="sect-above flex justify-evenly px-10 py-10 items-center">
+  <!-- BOCK BLEU FONCE -->
+  <div
+    class="bg-[#07506A] rounded-lg w-[352px] h-[273.5px] flex text-white justify-evenly"
+    style="flex-direction: column"
+  >
+    <div class="px-5 py-3">
+      <p class="text-[22px]">CHIFFRE D'AFFAIRE</p>
+      <span
+        class="text-[#FFDC0E] text-[27px] text-center w-full"
+        style="font-weight: bold"
+        >{{ chiffreAffaire }} FCFA</span
+      >
+    </div>
+
+    <div class="px-5 py-3">
+      <p class="text-[22px]">TRANSACTION TOTAL</p>
+      <span
+        class="text-[#FFDC0E] text-[27px] text-center w-full"
+        style="font-weight: bold"
+        >{{ tottalTransaction }}</span
+      >
+    </div>
+  </div>
+
+    <!-- BOCK RESUME DES STATUS -->
+  <div class="cardResumeStatus flex" style="flex-direction: column">
+    <h1 class="text-[25px] text-sky-900 mb-6">Résumé des status</h1>
+
+    <div class="flex justify-between gap-x-4">
+      <!-- CARD ECHECS -->
+      <app-card-resume
+        [title]="'Echec'"
+        [total1]="300"
+        [total2]="500"
+        [typeCard]="'red'"
+      ></app-card-resume>
+
+      <!-- CARD SUCCES -->
+      <app-card-resume
+        [title]="'Succes'"
+        [total1]="200"
+        [total2]="500"
+        [typeCard]="'green'"
+      ></app-card-resume>
+    </div>
+  </div>
+
+  <div class="cardResumeStatus flex" style="flex-direction: column">
+    <h1 class="text-[25px] text-sky-900 mb-6">Résumé des méthodes</h1>
+
+    <div class="flex justify-between gap-x-4">
+      <!-- CARD APP MOBILE -->
+      <app-card-resume
+        [title]="'App mobile'"
+        [total1]="300"
+        [total2]="500"
+        [typeCard]="'green'"
+      ></app-card-resume>
+
+      <!-- CARD CARD USSD -->
+      <app-card-resume
+        [title]="'USSD'"
+        [total1]="200"
+        [total2]="500"
+        [typeCard]="'red'"
+      ></app-card-resume>
+    </div>
+  </div>
+</section>
+
+<section class="sect-under">
+    
+</section>
