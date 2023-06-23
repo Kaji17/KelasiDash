@@ -1,0 +1,138 @@
+.card-red:hover {
+  animation-name: scale-content;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-direction: alternate;
+  .redLineB {
+    animation-name: shutter-in-top;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    animation-direction: alternate;
+  }
+  div {
+    color: white;
+    transition-duration: 0.4s;
+    animation-direction: alternate;
+
+    > span {
+      color: white;
+      transition-duration: 0.4s;
+      animation-direction: alternate;
+    }
+    > button {
+      color: white;
+      border-color: white;
+      animation-direction: alternate;
+    }
+  }
+  .bRed {
+    background-color: #d92222;
+  }
+}
+.redLineB {
+  background-color: #ee6060;
+}
+.bRed-l {
+  background-color: rgba(238, 96, 96, 0.22);
+  > span {
+    color: #ee6060;
+  }
+}
+
+.card-green:hover {
+  animation-name: scale-content;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-direction: alternate;
+  .greenLineB {
+    animation-name: shutter-in-top-G;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    animation-direction: alternate;
+  }
+  div {
+    color: white;
+    transition-duration: 0.4s;
+    animation-direction: alternate;
+
+    > span {
+      color: white;
+      transition-duration: 0.4s;
+      animation-direction: alternate;
+    }
+    > button {
+      color: white;
+      border-color: white;
+      animation-direction: alternate;
+    }
+  }
+  .bGreen {
+    background-color: #258735;
+  }
+}
+.greenLineB {
+  background-color: #39a74b;
+}
+.bGreen-l {
+  background-color: rgba(56.99, 166.81, 74.57, 0.22);
+  > span {
+    color: #39a74b;
+  }
+}
+
+@keyframes shutter-in-top {
+  0% {
+    height: 6px;
+    transform-origin: bottom;
+    background-color: white;
+    top: 206px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  100% {
+    height: 212px;
+    transform-origin: bottom;
+    background-color: #ee6060;
+    top: 0;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+  }
+}
+
+@keyframes shutter-in-top-G {
+    0% {
+      height: 6px;
+      transform-origin: bottom;
+      background-color: white;
+      top: 206px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+    100% {
+      height: 212px;
+      transform-origin: bottom;
+      background-color: #39a74b;
+      top: 0;
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
+  }
+  
+
+@keyframes scale-content {
+  0% {
+    transform: scale(1);
+    --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color),
+      0 1px 2px -1px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+      var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+  100% {
+    transform: scale(1.1);
+    --tw-drop-shadow: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15));
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+      var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+      var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  }
+}

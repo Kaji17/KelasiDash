@@ -1,0 +1,31 @@
+<!-- CARD ECHECS -->
+<div
+class="w-[174px] h-[212px] bg-white rounded-lg shadow flex items-center justify-evenly relative z-10"
+style="flex-direction: column"
+[ngClass]="typeCard==='green'?'card-green':'card-red'"
+>
+<div
+  class="bRed w-[127px] h-[36px] bg-opacity-20 rounded flex items-center justify-center relative z-10"
+  [ngClass]="typeCard==='green'?'bGreen bGreen-l':'bRed bRed-l'"
+>
+  <span class="text-center text-[17px]">{{title | titlecase}}</span>
+</div>
+
+<div class="text-sky-900 text-[26px] relative z-10">
+  {{ total1 }}/{{ total2 }}
+</div>
+
+<div class="relative z-10">
+  <button
+    class="text-sky-900 w-[119px] h-[29px] text-[14px] rounded-[31px] border border-sky-900"
+    type="button"
+  >
+    Voir plus
+  </button>
+</div>
+<!-- LIGNE ROUGE EN BAS -->
+<div
+  class="w-[174px] h-[6px] left-[0px] top-[206px] absolute rounded-bl-lg rounded-br-lg shadow z-0"
+  [ngClass]="typeCard==='green'?'greenLineB':'redLineB'"
+></div>
+</div>

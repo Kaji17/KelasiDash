@@ -15,16 +15,16 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CardResumeComponent } from './card-resume/card-resume.component';
 
 
 @NgModule({
-  declarations: [NavBarComponent, PaginationComponent, TableauComponent],
+  declarations: [NavBarComponent, PaginationComponent, TableauComponent, CardResumeComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     DividerModule,
-    // AppRoutingModule,
     AvatarModule,
     AvatarGroupModule,
     MenuModule,
@@ -35,6 +35,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DropdownModule,
     TagModule
   ],
-  exports: [NavBarComponent, PaginationComponent,TableauComponent],
+  exports: [NavBarComponent, PaginationComponent,TableauComponent,CardResumeComponent],
 })
 export class ComponentsModule {}
