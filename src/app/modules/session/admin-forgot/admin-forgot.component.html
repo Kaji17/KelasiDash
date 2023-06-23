@@ -1,1 +1,53 @@
-yooooo
+<div class="flex items-center justify-center min-h-full" style="color: white;">
+    <div class="contentL flex items-center justify-center content-center">
+  
+      <!-- FORMULAIRE DE CONNEXION -->
+      <form class="flex items-center" style="flex-direction: column;" [formGroup]="formResetPassword">
+        <!-- INPUT EMAIL -->
+        <div class="p-float-label">
+          <input
+            formControlName="email"
+            required
+            type="email"
+            id="inputtext"
+            class="no-border-on-focus"
+            pInputText
+            [(ngModel)]="value"
+            style="
+              background-color: transparent;
+              border-bottom: 1.5px solid white;
+              border-top: 0;
+              border-left: 0;
+              border-right: 0;
+              border-radius: 0;
+              padding: 8px 0;
+              color: white;
+              width: 254px;
+              margin: 10px 0;
+              font-weight: bold;
+              text-align: center;
+            "
+          />
+          <label for="inputtext" style="color: white; left: 0">Inscrivez votre email pour recevoir l'OTP</label>
+        </div>
+    
+        <!-- Button de soumission de formulaire -->
+        <p-button
+          label="Envoyer"
+          [loading]="loading"
+          (click)="load()"
+          class="mt-8 btnSession"
+          [style]="{'background-color':'transparent!important', 'color':'#ffffff!important', 'border-color': 'white!important',
+          'cursor': 'pointer', 'border-radius': '30px !important', 'width':' 229px','height': '52px','text-align': 'center'
+        }"
+        ></p-button>
+      </form>
+    </div>
+  
+    <div class="flex absolute container bottom-3 text-center pied" style="flex-direction: column">
+      <h1 style="font-size: 26px">KELASI</h1>
+      <p class="text-[#FFDC0E]" style="font-size: 10px">MTN CONGO</p>
+      <p>Copyright &copy; KYRMANN 2023 </p>
+    </div>
+  </div>
+  
