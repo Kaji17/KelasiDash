@@ -1,0 +1,27 @@
+.at-item {
+
+    
+    animation-name: scale-up-center;
+    animation-duration: 0.1s;
+    animation-timing-function: linear;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: none;
+        
+    /* shorthand
+    animation: scale-up-center 0.1s linear 0s 1 normal none;*/
+}
+
+@keyframes scale-up-center {
+			
+    0% {
+        transform:scale(.2);
+    }
+    37% {
+        
+    }
+    100% {
+        transform:scale(1);
+    }
+}

@@ -108,3 +108,19 @@ body{
   color: #4F46E5;
 }
 
+.progressMomoPay{
+  .p-progressbar .p-progressbar-value {
+    background: #39A74B!important;
+    height: 4px!important;
+    border-radius: 30px!important;
+}
+}
+
+.progressUssdPay{
+  .p-progressbar .p-progressbar-value {
+    background: #EE6060!important;
+    height: 4px!important;
+    border-radius: 30px!important;
+}
+}
+

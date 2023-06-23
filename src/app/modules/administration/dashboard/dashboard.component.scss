@@ -1,0 +1,37 @@
+.at-item {
+    animation-name: fade-in;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: none;
+        
+    /* shorthand
+    animation: fade-in 1.2s ease-in 0s 1 normal none;*/
+}
+@keyframes fade-in {
+        
+    0% {
+        border-radius: 100%;
+        opacity:0;
+    }
+    100% {
+        border-radius: 0%;
+        opacity:1;
+    }
+}
+
+.pointGreen{
+    width: 4px;
+    height: 4px;
+    border-radius: 100%;
+    background-color: #39A74B;
+}
+
+.pointred{
+    width: 4px;
+    height: 4px;
+    border-radius: 100%;
+    background-color: #EE6060;
+}

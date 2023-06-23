@@ -15,11 +15,16 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CardResumeComponent } from './card-resume/card-resume.component';
+import {ChartModule} from 'primeng/chart';
+import {ProgressBarModule} from 'primeng/progressbar';
+import { CardMethodePaiementComponent } from './card/card-methode-paiement/card-methode-paiement.component';
+import { CardModePaiementComponent } from './card/card-mode-paiement/card-mode-paiement.component';
+import { CardResumeComponent } from './card/card-resume/card-resume.component';
+import {TooltipModule} from 'primeng/tooltip';
 
 
 @NgModule({
-  declarations: [NavBarComponent, PaginationComponent, TableauComponent, CardResumeComponent],
+  declarations: [NavBarComponent, PaginationComponent, TableauComponent, CardResumeComponent, CardModePaiementComponent, CardMethodePaiementComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -33,8 +38,11 @@ import { CardResumeComponent } from './card-resume/card-resume.component';
     InputTextModule,
     CalendarModule,
     DropdownModule,
-    TagModule
+    TagModule,
+    ProgressBarModule,
+    ChartModule,
+    TooltipModule
   ],
-  exports: [NavBarComponent, PaginationComponent,TableauComponent,CardResumeComponent],
+  exports: [NavBarComponent, PaginationComponent,TableauComponent,CardResumeComponent,CardMethodePaiementComponent,CardModePaiementComponent],
 })
 export class ComponentsModule {}

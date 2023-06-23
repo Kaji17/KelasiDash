@@ -17,9 +17,11 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { TagModule } from 'primeng/tag';
-import { SessionRoutingModule } from '../session/session-routing.module';
 import { ProfilComponent } from './profil/profil.component';
+import {ChartModule} from 'primeng/chart';
+import {ProgressBarModule} from 'primeng/progressbar';
+
+
 
 
 @NgModule({
@@ -45,7 +47,9 @@ import { ProfilComponent } from './profil/profil.component';
     InputTextModule,
     CalendarModule,
     DropdownModule,
-    TableModule
+    TableModule,
+    ChartModule,
+    ProgressBarModule
   ]
 })
 export class AdministrationModule { }

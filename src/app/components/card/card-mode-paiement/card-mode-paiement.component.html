@@ -1,0 +1,56 @@
+<div
+class="rounded-lg bg-[transparent] px-5 py-5 flex w-[492px] h-[491px]"
+style="flex-direction: column; border: 1px solid #e9ebf8"
+>
+<div class="flex justify-end">
+  <!-- BUTTON POUR ALLER AU STATISTIQUES -->
+  <button
+    pButton
+    type="button"
+    label="Toutes les statistiques"
+    icon="pi pi-arrow-right"
+    class="p-button-text text-[#07506A]"
+    [style]="{ color: '#07506A' }"
+  ></button>
+</div>
+
+<div class="polar flex justify-center">
+  <p-chart
+    type="polarArea"
+    [data]="data"
+    [options]="chartOptions"
+    [width]="'314px'"
+    [height]="'309px'"
+  ></p-chart>
+</div>
+
+<div class="grid grid-cols-4 gap-x-4">
+  <div class="col-span-3 font-bold">
+    <div class="flex items-center text-[#07506A] text-[16px] font-bold">
+      <div class="pointGreen me-1"></div>
+      Paiement Momo
+    </div>
+  </div>
+  <p-progressBar
+    [value]="progressMomo"
+    [showValue]="false"
+    class="progressMomoPay col-span-3 my-auto"
+    [style]="{ height: '4px' }"
+  ></p-progressBar>
+  <div class="text-[#07506A] text-[14px] font-bold">2000000 FCFA</div>
+
+  <div class="col-span-3 font-bold">
+    <div class="flex items-center text-[#07506A] text-[16px] font-bold">
+      <div class="pointred me-1"></div>
+      Paiement USSD
+    </div>
+  </div>
+  <p-progressBar
+    [value]="progressUssd"
+    [showValue]="false"
+    class="progressUssdPay col-span-3 my-auto"
+    [style]="{ height: '4px' }"
+  ></p-progressBar>
+  <div class="text-[#07506A] text-[14px] font-bold">2000000 FCFA</div>
+</div>
+</div>
