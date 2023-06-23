@@ -19,7 +19,7 @@ export class NavBarComponent implements OnInit {
       {
         label: 'Aller sur profil',
         icon: 'pi pi-user', 
-        routerLink: ['/administration/configurations/parametres/profil'],
+        routerLink: ['/administration/profil'],
       },
       {separator: true},
       {label: 'Se déconnecter', icon: 'pi pi-sign-out', command: () => {
