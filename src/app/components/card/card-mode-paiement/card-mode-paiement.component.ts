@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,7 +18,13 @@ export class CardModePaiementComponent implements OnInit{
   @Input()progressMomo!: number;
   @Input()progressUssd!: number
 
+  constructor(private route : Router){}
+
   ngOnInit(): void {
+  }
+
+  onStatNav(): void{
+    this.route.navigate(['/administration/statistiques'])
   }
 
 }
