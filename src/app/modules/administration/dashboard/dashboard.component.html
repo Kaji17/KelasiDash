@@ -1,6 +1,6 @@
 <div class="at-item">
   <!-- DASH TOP -->
-  <section class="sect-above flex justify-evenly px-10 py-10 items-center">
+  <section class="sect-above flex justify-evenly px-6 py-6 items-center">
     <!-- BOCK BLEU FONCE -->
     <div
       class="bg-[#07506A] rounded-lg w-[352px] h-[273.5px] flex text-white justify-evenly"
@@ -72,7 +72,7 @@
 
   <!-- DASH BOTTOM -->
   <section
-    class="sect-under w-full h-[55vh] bg-[white] flex justify-evenly px-10 py-10 items-center"
+    class="sect-under w-full h-full bg-[white] flex justify-evenly px-10 py-10 items-center"
   >
     <app-card-mode-paiement
       [progressMomo]="progressMomo"
@@ -80,8 +80,16 @@
       [progressUssd]="progressUssd"
     ></app-card-mode-paiement>
 
-    <app-card-methode-paiement [title]="titleAppMobile" [percentS]="90" [percentE]="10"></app-card-methode-paiement>
+    <app-card-methode-paiement
+      [title]="titleAppMobile"
+      [percentS]="90"
+      [percentE]="10"
+    ></app-card-methode-paiement>
 
-    <app-card-methode-paiement [title]="titleUSSD" [percentS]="49" [percentE]="51"></app-card-methode-paiement>
+    <app-card-methode-paiement
+      [title]="titleUSSD"
+      [percentS]="49"
+      [percentE]="51"
+    ></app-card-methode-paiement>
   </section>
 </div>
