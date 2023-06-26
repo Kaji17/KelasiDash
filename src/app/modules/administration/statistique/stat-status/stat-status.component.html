@@ -1,1 +1,19 @@
-<p>stat-status works!</p>
+<div>
+    <h1 class="text-center mt-6 text-[#07506A]">Status globale des transactions </h1>
+    <div class="flex justify-evenly">
+        <div class="chart">
+            <p-chart type="doughnut" [data]="data" [style]="{'width': '40%'}" [width]="'414px'"
+            [height]="'409px'"></p-chart>
+        </div>
+
+        <div class="comm flex justify-evenly" style="flex-direction: column;">
+            <div class="flex text-[#07506A] text-[24px] font-extrabold">
+                Succes : <span>{{percentS}}%</span>
+            </div>
+
+            <div class="flex text-[#EE6060] text-[24px] font-extrabold">
+                Echec : <span>{{percentE}}%</span>
+            </div>
+        </div>
+    </div>
+</div>

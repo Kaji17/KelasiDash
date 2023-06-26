@@ -10,12 +10,11 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { ComponentsModule } from './components/components.module';
 import { SharedModule } from './shared/shared.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,
     SessionLayoutComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
   ],
   imports: [
     BrowserModule,

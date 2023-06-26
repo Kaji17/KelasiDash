@@ -18,10 +18,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { ProfilComponent } from './profil/profil.component';
+import {TabViewModule} from 'primeng/tabview';
+import {MenubarModule} from 'primeng/menubar';
+import { StatPeriodeComponent } from './statistique/stat-periode/stat-periode.component';
 import {ChartModule} from 'primeng/chart';
-import {ProgressBarModule} from 'primeng/progressbar';
-
-
+import {DividerModule} from 'primeng/divider';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import {ProgressBarModule} from 'primeng/progressbar';
     StatModePaiementChiffreAffaireComponent,
     StatExamenStatusComponent,
     StatExamenChiffreAffaireComponent,
-    ProfilComponent
+    ProfilComponent,
+    StatPeriodeComponent
   ],
   imports: [
     CommonModule,
@@ -48,8 +50,10 @@ import {ProgressBarModule} from 'primeng/progressbar';
     CalendarModule,
     DropdownModule,
     TableModule,
+    TabViewModule,
+    MenubarModule,
     ChartModule,
-    ProgressBarModule
+    DividerModule
   ]
 })
 export class AdministrationModule { }
