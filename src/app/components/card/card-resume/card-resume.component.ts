@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card-resume',
@@ -12,8 +13,14 @@ export class CardResumeComponent implements OnInit{
   @Input()typeCard!: string
   @Input()title!: string
 
+  constructor(private route: Router){}
+
   ngOnInit(): void {
 
   }
 
+
+  onStatNav(): void{
+    this.route.navigate(['/administration/statistiques'])
+  }
 }
