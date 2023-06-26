@@ -1,3 +1,22 @@
 <div class="at-item">
-statistique
+    <div class="text-center mb-9">
+        <h1 class="text-[#07506A] text-[26px] mt-9">Statistiques des transactions </h1>
+        <h2 class="text-[#8E98A8] text-[18px]">
+            Prêt pour des analyses poussées avec des statistiques graphiques claires   
+        </h2>
+      </div>
+    <p-tabView [style]="{padding:'20px', borderRadius:'20px'}">
+        <p-tabPanel header="STATUS">
+            <p-menubar [model]="items"></p-menubar>
+            <div *ngIf="menuSelected==1"> <app-stat-status [data]="data"></app-stat-status> </div>
+            <div *ngIf="menuSelected==2"> <app-stat-periode [data]="dataP"></app-stat-periode></div>
+            <div *ngIf="menuSelected==3"> <app-stat-mode-paiement-status></app-stat-mode-paiement-status></div>
+            <div *ngIf="menuSelected==4"> <app-stat-examen-status></app-stat-examen-status></div>
+        </p-tabPanel>
+        <p-tabPanel header="CHIFFRE D'AFFAIRE">
+            <p-menubar [model]="items1"></p-menubar>
+            <div *ngIf="menuSelected==1"> <app-stat-chiffre-affaire></app-stat-chiffre-affaire></div>
+
+        </p-tabPanel>
+    </p-tabView>
 </div>
