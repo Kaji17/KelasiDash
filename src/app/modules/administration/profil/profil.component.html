@@ -1,0 +1,110 @@
+<form class="h-[100vh]" [formGroup]="formSignUp">
+  <div
+    class="w-[40%] h-[50%] bg-white rounded-lg shadow flex items-center relative justify-evenly"
+    style="
+      flex-direction: column;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    "
+  >
+    <h1 class="text-sky-900 text-[20px] text-center">Modifier mot de passe</h1>
+    <!-- INPUT MOT DE PASSE -->
+    <div class="p-float-label mt-5">
+      <input
+        formControlName="password"
+        type="text"
+        id="inputtext"
+        class="no-border-on-focus"
+        pInputText
+        [(ngModel)]="oldP"
+        style="
+          background-color: transparent;
+          border-bottom: 1.5px solid #07506a;
+          border-top: 0;
+          border-left: 0;
+          border-right: 0;
+          border-radius: 0;
+          padding: 8px 0;
+          color: #07506a;
+          font-weight: bold;
+          width: 222px;
+          margin: 10px 0;
+        "
+      />
+      <label for="inputtext" style="color: #07506a; left: 0"
+        >Ancien mot de passe</label
+      >
+    </div>
+
+    <div class="p-float-label mt-5">
+      <input
+        formControlName="password"
+        type="text"
+        id="inputtext"
+        class="no-border-on-focus"
+        pInputText
+        [(ngModel)]="oldP"
+        style="
+          background-color: transparent;
+          border-bottom: 1.5px solid #07506a;
+          border-top: 0;
+          border-left: 0;
+          border-right: 0;
+          border-radius: 0;
+          padding: 8px 0;
+          color: #07506a;
+          font-weight: bold;
+          width: 222px;
+          margin: 10px 0;
+        "
+      />
+      <label for="inputtext" style="color: #07506a; left: 0"
+        >Nouveau mot de passe</label
+      >
+    </div>
+
+    <div class="p-float-label mt-5">
+      <input
+        formControlName="password"
+        type="text"
+        id="inputtext"
+        class="no-border-on-focus"
+        pInputText
+        [(ngModel)]="oldP"
+        style="
+          background-color: transparent;
+          border-bottom: 1.5px solid #07506a;
+          border-top: 0;
+          border-left: 0;
+          border-right: 0;
+          border-radius: 0;
+          padding: 8px 0;
+          color: #07506a;
+          font-weight: bold;
+          width: 222px;
+          margin: 10px 0;
+        "
+      />
+      <label for="inputtext" style="color: #07506a; left: 0"
+        >Confirmer mot de passe</label
+      >
+    </div>
+
+    <p-button
+      label="Connexion"
+      (click)="change()"
+      class="mt-8 modification"
+      [style]="{
+        'background-color': '#07506A!important',
+        color: '#07506A!important',
+        'border-color': '#07506A!important',
+        cursor: 'pointer',
+        'border-radius': '30px !important',
+        width: ' 229px!important',
+        height: '52px!important',
+        'text-align': 'center'
+      }"
+    ></p-button>
+  </div>
+</form>
