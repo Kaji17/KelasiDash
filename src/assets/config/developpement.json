@@ -1,5 +1,5 @@
 {
-    "HOST_API-DEV": "kyrmann-gs.com:9508/kelasi-statistique/v1/",
+    "HOST_API-DEV": "https://kyrmann-gs.com:9508/kelasi-statistique/v1/",
     "HOST:API": "https://kms02.net:",
     "API_ENDPOINTS":{
 
