@@ -1,10 +1,25 @@
 {
-    "HOST_API-DEV": "http://ksecent.ddns.net:9252/canaan/",
+    "HOST_API-DEV": "kyrmann-gs.com:9508/kelasi-statistique/v1/",
     "HOST:API": "https://kms02.net:",
     "API_ENDPOINTS":{
-      "comment ": "------------ OPERATIONS ADMIN---------------",
-      "ADMIN_ADD": "9701/shipp/v1/crud/web/admin/add"
-    },
-    "imgVar": "/var/www/html/",
-    "imgHttp": "https://kms02.net/"
+
+      "comment": "------------ OPERATIONS ADMIN ---------------",
+      "ADMIN_AUTH_SIGNIN": "auth/login",
+      "ADMIN_AUTH_REFRESHTOKEN": "auth/refreshtoken",
+
+      "comment": "------------ OPERATIONS STATISTIQUES ---------------",
+      "STAT_AIRTIME_GET": "airtime",
+      "STAT_AIRTIME_COUNT_GET": "airtime/count",
+      "STAT_AIRTIME_STATUS_GET": "airtime/status",
+      "STAT_AIRTIME_TAUX_GET": "airtime/taux",
+      "STAT_AIRTIME_MONTANT_GET": "airtime/totalamount",
+      "STAT_MOMO_GET": "momo",
+      "STAT_MOMO_COUNT_GET": "momo/count",
+      "STAT_MOMO_STATUS_GET": "momo/status",
+      "STAT_MOMO_TAUX_GET": "momo/taux",
+      "STAT_MOMO_MONTANT_GET": "momo/totalamount",
+
+      "comment": "------------ OPERATIONS SMS ---------------",
+      "SMS_GET": "sms/status"
+    }
   }
