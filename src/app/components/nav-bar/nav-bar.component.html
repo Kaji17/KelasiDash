@@ -37,44 +37,14 @@
 
         [ngClass]="dispas?'affiche':''"
       >
-        <li class="mx-4 my-6 md:my-0">
+
+      <!-- LES ITEMS DE LA NAVBAR -->
+        <li *ngFor="let item of navItem" class="mx-4 my-6 md:my-0" [ngClass]="!item.display ?'sup':'' ">
           <a
             class="text-[#8E98A8] hover:text-[#FFDC0E] duration-300"
-            routerLink="/administration/dash-board"
+            [routerLink]="item.path"
             routerLinkActive="active"
-            >Dashboard</a
-          >
-        </li>
-        <li class="mx-4 my-6 md:my-0">
-          <a
-            class="text-[#8E98A8] hover:text-[#FFDC0E] duration-300"
-            routerLink="/administration/history"
-            routerLinkActive="active"
-            >Historique</a
-          >
-        </li>
-        <li class="mx-4 my-6 md:my-0">
-          <a
-            class="text-[#8E98A8] hover:text-[#FFDC0E] duration-300"
-            routerLink="/administration/statistiques"
-            routerLinkActive="active"
-            >Statisttiques</a
-          >
-        </li>
-        <li class="mx-4 my-6 md:my-0 sup">
-          <a
-            class="text-[#8E98A8] hover:text-[#FFDC0E] duration-300 "
-            routerLink="/administration/profil"
-            routerLinkActive="active"  
-            >Aller sur profil</a
-          >
-        </li>
-        <li class="mx-4 my-6 md:my-0 sup">
-          <a
-            class="text-[#8E98A8] hover:text-[#FFDC0E] duration-300 "
-            routerLink="/session"
-            routerLinkActive="active"
-            >Se déconnecter</a
+            >{{item.label}}</a
           >
         </li>
       </ul>
@@ -87,8 +57,7 @@
         class="me-3 dispa"
       ></p-avatar>
       <div class="flex dispa" style="flex-direction: column">
-        <h1>Cody Fisher</h1>
-        <p style="font-size: 10px" class="text-[#8E98A8]">123-123-123</p>
+        <h1>{{ admin }}</h1>
       </div>
       <div>
         <button
