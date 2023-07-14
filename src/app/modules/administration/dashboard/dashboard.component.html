@@ -1,56 +1,88 @@
 <div class="at-item">
   <!-- DASH TOP -->
-  <section class="sect-above flex justify-evenly px-6 py-6 items-center">
+  <section class="sect-above flex justify-evenly px-6 py-6 items-center  max-xl:grid max-xl:gap-y-3 max-xl:justify-items-center">
     <!-- BOCK BLEU FONCE -->
     <div
-      class="bg-[#07506A] rounded-lg w-[352px] h-[273.5px] flex text-white justify-evenly"
+      class="bg-[#07506A] rounded-lg w-[352px] h-[273.5px] flex text-white justify-evenly max-xl:w-[60%] max-[980px]:w-full max-[505px]:w-[75%] max-[430px]:w-full"
       style="flex-direction: column"
     >
-      <div class="px-5 py-3">
-        <p class="text-[22px]">CHIFFRE D'AFFAIRE</p>
-        <span
-          class="text-[#FFDC0E] text-[27px] text-center w-full"
-          style="font-weight: bold"
-          >{{ chiffreAffaire }} FCFA</span
+      <div class="px-5 py-3 text-center">
+        <p-inplace
+          [closable]="true"
+          [closeIcon]="iconsverif"
+          class="inplace-class"
         >
+          <ng-template pTemplate="display">
+            <span>Période: {{ dateDebut | date }}</span>
+          </ng-template>
+          <ng-template pTemplate="content">
+            <p-calendar
+              [(ngModel)]="dateDebut"
+              [showButtonBar]="true"
+              placeholder="date debut"
+            ></p-calendar>
+
+            <p-calendar
+              [(ngModel)]="dateDebut"
+              [showButtonBar]="true"
+              placeholder="date fin"
+            ></p-calendar>
+          </ng-template>
+        </p-inplace>
       </div>
 
-      <div class="px-5 py-3">
+      <div class="px-5 max-xl:flex max-xl:justify-between">
+        <p class="text-[22px]">CHIFFRE D'AFFAIRE</p>
+        <span
+          class="text-[#FFDC0E] text-[27px] text-center w-full max-xl:w-auto max-[980px]:w-full"
+          style="font-weight: bold"
+          >{{ chiffreAffaire }} FCFA
+          <ng-container *ngIf="chiffreAffaire == 0">
+            <i class="pi pi-spin pi-spinner" style="font-size: 1.5rem"></i>
+          </ng-container>
+        </span>
+      </div>
+
+      <div class="px-5 py-3 max-xl:flex max-xl:justify-between">
         <p class="text-[22px]">TRANSACTION TOTAL</p>
         <span
-          class="text-[#FFDC0E] text-[27px] text-center w-full"
+          class="text-[#FFDC0E] text-[27px] text-center w-full max-xl:w-auto max-[980px]:w-full"
           style="font-weight: bold"
           >{{ tottalTransaction }}</span
         >
       </div>
     </div>
-    <!-- BOCK RESUME DES STATUS -->
-    <div class="cardResumeStatus flex" style="flex-direction: column">
-      <h1 class="text-[25px] text-sky-900 mb-6">Résumé des status</h1>
 
-      <div class="flex justify-between gap-x-4">
+
+    <div class="flex gap-x-8 max-[980px]:grid max-[980px]:min-w-[500px] max-[980px]:gap-y-7 max-[430px]:min-w-[80%]" >
+      <!-- BOCK RESUME DES STATUS -->
+    <div class="cardResumeStatus flex" style="flex-direction: column">
+      <h1 class="text-[25px] text-sky-900 mb-6 max-xl:text-center">Résumé des status</h1>
+
+      <div class="flex justify-between gap-x-4 max-[980px]:justify-evenly  max-[430px]:gap-y-3 max-[430px]:items-center">
         <!-- CARD ECHECS -->
         <app-card-resume
           [title]="'Echec'"
-          [total1]="300"
-          [total2]="500"
+          [total1]="tottalTransactionEchec"
+          [total2]="tottalTransaction"
           [typeCard]="'red'"
         ></app-card-resume>
 
         <!-- CARD SUCCES -->
         <app-card-resume
           [title]="'Succes'"
-          [total1]="200"
-          [total2]="500"
+          [total1]="tottalTransactionSuccess"
+          [total2]="tottalTransaction"
           [typeCard]="'green'"
         ></app-card-resume>
       </div>
     </div>
 
+    <!-- BOCK RESUME DES METHODE -->
     <div class="cardResumeStatus flex" style="flex-direction: column">
-      <h1 class="text-[25px] text-sky-900 mb-6">Résumé des méthodes</h1>
+      <h1 class="text-[25px] text-sky-900 mb-6 max-xl:text-center">Résumé des méthodes</h1>
 
-      <div class="flex justify-between gap-x-4">
+      <div class="flex justify-between gap-x-4 max-[980px]:justify-evenly  max-[430px]:gap-y-3  max-[430px]:items-center">
         <!-- CARD APP MOBILE -->
         <app-card-resume
           [title]="'App mobile'"
@@ -68,11 +100,12 @@
         ></app-card-resume>
       </div>
     </div>
+    </div>
   </section>
 
   <!-- DASH BOTTOM -->
   <section
-    class="sect-under w-full h-full bg-[white] flex justify-evenly px-10 py-10 items-center"
+    class="sect-under w-full h-full bg-[white] flex justify-evenly px-10 py-10 items-center max-[980px]:flex-col max-[980px]:px-0 max-[980px]:gap-y-5"
   >
     <app-card-mode-paiement
       [progressMomo]="progressMomo"
@@ -80,16 +113,18 @@
       [progressUssd]="progressUssd"
     ></app-card-mode-paiement>
 
-    <app-card-methode-paiement
-      [title]="titleAppMobile"
-      [percentS]="90"
-      [percentE]="10"
-    ></app-card-methode-paiement>
+    <div class="flex max-xl:grid max-xl:gap-y-3 max-[980px]:flex max-[980px]:gap-x-3 max-[768px]:grid">
+      <app-card-methode-paiement
+        [title]="titleAppMobile"
+        [percentS]="90"
+        [percentE]="10"
+      ></app-card-methode-paiement>
 
-    <app-card-methode-paiement
-      [title]="titleUSSD"
-      [percentS]="49"
-      [percentE]="51"
-    ></app-card-methode-paiement>
+      <app-card-methode-paiement
+        [title]="titleUSSD"
+        [percentS]="49"
+        [percentE]="51"
+      ></app-card-methode-paiement>
+    </div>
   </section>
 </div>
