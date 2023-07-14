@@ -23,37 +23,41 @@ import {MenubarModule} from 'primeng/menubar';
 import { StatPeriodeComponent } from './statistique/stat-periode/stat-periode.component';
 import {ChartModule} from 'primeng/chart';
 import {DividerModule} from 'primeng/divider';
+import {InplaceModule} from 'primeng/inplace';
+import { SharedModule } from "../../shared/shared.module";
 
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    HistoryComponent,
-    StatistiqueComponent,
-    StatStatusComponent,
-    StatChiffreAffaireComponent,
-    StatModePaiementStatusComponent,
-    StatModePaiementChiffreAffaireComponent,
-    StatExamenStatusComponent,
-    StatExamenChiffreAffaireComponent,
-    ProfilComponent,
-    StatPeriodeComponent
-  ],
-  imports: [
-    CommonModule,
-    AdministrationRoutingModule,
-    ComponentsModule,
-    ButtonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    InputTextModule,
-    CalendarModule,
-    DropdownModule,
-    TableModule,
-    TabViewModule,
-    MenubarModule,
-    ChartModule,
-    DividerModule
-  ]
+    declarations: [
+        DashboardComponent,
+        HistoryComponent,
+        StatistiqueComponent,
+        StatStatusComponent,
+        StatChiffreAffaireComponent,
+        StatModePaiementStatusComponent,
+        StatModePaiementChiffreAffaireComponent,
+        StatExamenStatusComponent,
+        StatExamenChiffreAffaireComponent,
+        ProfilComponent,
+        StatPeriodeComponent
+    ],
+    imports: [
+        CommonModule,
+        AdministrationRoutingModule,
+        ComponentsModule,
+        ButtonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        InputTextModule,
+        CalendarModule,
+        DropdownModule,
+        TableModule,
+        TabViewModule,
+        MenubarModule,
+        ChartModule,
+        DividerModule,
+        InplaceModule,
+        SharedModule
+    ]
 })
 export class AdministrationModule { }
