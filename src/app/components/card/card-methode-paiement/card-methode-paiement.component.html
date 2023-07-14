@@ -8,21 +8,21 @@
   <div class="w-[181px] h-[139px] relative left-[50%] translate-x-[-50%]">
     <!-- GRAND CERCLE -->
     <div
-      class="w-[139px] h-[139px] left-[0px] top-[0px] absolute rounded-full"
+      class="w-[139px] h-[139px] left-[0px] top-[0px] absolute rounded-full shadow-pop-br shadow-drop-2-center border-2 vibrate-1"
       [ngClass]="percentS > percentE ? 'blue' : 'red'"
     >
       <span
-        class="absolute top-[50%] translate-y-[-50%] left-[30%] translate-x-[-30%] text-[white] text-[19px] font-extrabold"
+        class="absolute top-[50%] translate-y-[-50%] left-[30%] translate-x-[-30%] text-[white] text-[19px] font-extrabold "
         >{{ percentS > percentE ? percentS : percentE }}%</span
       >
     </div>
     <!-- PETIT CERCLE -->
     <div
-      class="w-[100px] h-[100px] left-[81px] top-[0px] absolute rounded-full"
+      class="w-[100px] h-[100px] left-[81px] top-[0px] absolute rounded-full border-4 shadow-inset-center vibrate-1 shadow-inset-center"
       [ngClass]="percentS > percentE ? 'red' : 'blue'"
     >
       <span
-        class="absolute top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] text-[white] text-[19px] font-extrabold"
+        class="absolute top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] text-[white] text-[19px] font-extrabold "
         >{{ percentS > percentE ? percentE : percentS }}%</span
       >
     </div>
