@@ -201,19 +201,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
     };
 
     let total1: number;
-    this.subscriptionATotalamount = this.statistiqueService
-      .getMontantTotal(ca)
-      .subscribe({
-        next: (value) => {
-          total1 = value;
-          console.log('montantTottal', this.chiffreAffaire);
-        },
-      });
-
-    this.statistiqueService.getMontantTotalMomo(ca1).subscribe({
+    this.statistiqueService.getMontantTotal(ca).subscribe({
       next: (value) => {
-        this.chiffreAffaire = total1 + value;
-        console.log('montantTottal2', this.chiffreAffaire);
+        total1 = value;
+        console.log('montantTottal', this.chiffreAffaire);
+        this.statistiqueService.getMontantTotalMomo(ca1).subscribe({
+          next: (value) => {
+            this.chiffreAffaire = total1 + value;
+            console.log('montantTottal2', this.chiffreAffaire);
+          },
+        });
       },
     });
   }
