@@ -6,7 +6,7 @@
       class="bg-[#07506A] rounded-lg w-[352px] h-[273.5px] flex text-white justify-evenly max-xl:w-[60%] max-[980px]:w-full max-[505px]:w-[75%] max-[430px]:w-full"
       style="flex-direction: column"
     >
-      <div class="px-5 py-3 text-center">
+      <!-- <div class="px-5 py-3 text-center">
         <p-inplace
           [closable]="true"
           [closeIcon]="iconsverif"
@@ -29,7 +29,7 @@
             ></p-calendar>
           </ng-template>
         </p-inplace>
-      </div>
+      </div> -->
 
       <div class="px-5 max-xl:flex max-xl:justify-between">
         <p class="text-[22px]">CHIFFRE D'AFFAIRE</p>
@@ -70,7 +70,7 @@
 
         <!-- CARD SUCCES -->
         <app-card-resume
-          [title]="'Succes'"
+          [title]="'Succès'"
           [total1]="tottalTransactionSuccess"
           [total2]="tottalTransaction"
           [typeCard]="'green'"
@@ -85,17 +85,17 @@
       <div class="flex justify-between gap-x-4 max-[980px]:justify-evenly  max-[430px]:gap-y-3  max-[430px]:items-center">
         <!-- CARD APP MOBILE -->
         <app-card-resume
-          [title]="'App mobile'"
-          [total1]="300"
-          [total2]="500"
+          [title]="'MoMo'"
+          [total1]="tottalTransactionMoMo"
+          [total2]="tottalTransaction"
           [typeCard]="'green'"
         ></app-card-resume>
 
         <!-- CARD CARD USSD -->
         <app-card-resume
           [title]="'USSD'"
-          [total1]="200"
-          [total2]="500"
+          [total1]="tottalTransactionAirt"
+          [total2]="tottalTransaction"
           [typeCard]="'red'"
         ></app-card-resume>
       </div>
