@@ -1,6 +1,6 @@
 <!-- CARD ECHECS -->
 <div
-class="w-[174px] h-[212px] bg-white rounded-lg shadow flex items-center justify-evenly relative z-10"
+class="w-[174px] h-[212px] bg-white rounded-lg shadow flex items-center justify-evenly relative z-10 cursor-default"
 style="flex-direction: column"
 [ngClass]="typeCard==='green'?'card-green':'card-red'"
 >
@@ -12,7 +12,7 @@ style="flex-direction: column"
 </div>
 
 <div class="text-sky-900 text-[26px] relative z-10">
-  {{ total1 }}/{{ total2 }}
+  {{ total1 | number }}/{{ total2  | number}}
 </div>
 
 <div class="relative z-10">
