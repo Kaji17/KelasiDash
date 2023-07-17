@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.objChiffreaffaire = {};
     this.getTotalTransaction();
-    this.getChiffreAffaireA();
+    this.getChiffreAffaireAirtimeMoMo();
     this.getTotalTransactionM();
     this.tottalTransactionSuccess = 0;
     this.tottalTransactionEchec = 0;
@@ -174,36 +174,30 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Récuperation du chiffre d'affaire d'Airtimes des transaction réussit
-  getChiffreAffaireA(obj?: {}) {
+  // Récuperation du chiffre d'affaire d'Airtimes et Momo des transactions réussits
+  getChiffreAffaireAirtimeMoMo(obj?: {}) {
     let ca = {
-      datedebut: '',
-      datefin: '',
       statut: 'Success',
     };
-    ca.datefin = this.formatDateTime(new Date());
 
-    console.log(ca);
-    this.subscription = this.statistiqueService.getMontantTotal(ca).subscribe({
-      next: (value) => {
-        this.chiffreAffaire = value;
-        console.log('montantTottal', this.chiffreAffaire);
-      },
-    });
-    this.countagge();
-  }
-
-  // Récuperation du chiffre d'affaire de MoMo des transaction réussit
-  getChiffreAffaireMomo(obj?: {}) {
-    let ca = {
-
+    let ca1 = {
       statut: 'SUCCESSFUL',
     };
-    // ca.datefin = this.formatDateTime(new Date());
 
-    this.statistiqueService.getMontantTotalMomo(ca).subscribe({
+    let total1: number;
+    this.subscriptionATotalamount = this.statistiqueService
+      .getMontantTotal(ca)
+      .subscribe({
+        next: (value) => {
+          total1 = value;
+          console.log('montantTottal', this.chiffreAffaire);
+        },
+      });
+
+    this.statistiqueService.getMontantTotalMomo(ca1).subscribe({
       next: (value) => {
-        console.log('montant Momo', value);
+        this.chiffreAffaire = total1 + value;
+        console.log('montantTottal2', this.chiffreAffaire);
       },
     });
   }
