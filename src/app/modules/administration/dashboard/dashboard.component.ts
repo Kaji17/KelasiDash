@@ -285,6 +285,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
   }
 
+  // formattage des taux de string a number
+  formatTaux(char: any): number {
+    let chaine: string;
+
+    chaine = char.taux.toString();
+    chaine = chaine.trim().slice(0, -1);
+    let taux = parseFloat(chaine);
+    return taux;
+  }
   padZero(value: number, length: number = 2): string {
     return value.toString().padStart(length, '0');
   }
