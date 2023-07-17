@@ -23,8 +23,5 @@ export class CardModePaiementComponent implements OnInit{
   ngOnInit(): void {
   }
 
-  onStatNav(): void{
-    this.route.navigate(['/administration/statistiques'])
-  }
 
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -9,6 +9,8 @@ import { SessionLayoutComponent } from './layouts/session-layout/session-layout.
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ComponentsModule } from './components/components.module';
 import { SharedModule } from './shared/shared.module';
+import { registerLocaleData } from '@angular/common';
+import * as fr from '@angular/common/locales/fr';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,11 @@ import { SharedModule } from './shared/shared.module';
     
     
   ],
-  providers: [],
+  providers: [{provide: LOCALE_ID, useValue: 'fr-FR'}],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    registerLocaleData(fr.default);
+  }
+ }
