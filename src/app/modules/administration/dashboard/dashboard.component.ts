@@ -132,9 +132,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return valeur;
   }
 
-  // Recuperer le nombre total des transactions par reussit
-  getTotalTransactionSuccess() {
-    let val1;
+  // Recuperer le nombre total des transactions par reussit et échoué
+  getTotalTransactionSuccessEchec() {
     let ca = {
       statut: 'Success',
     };
@@ -143,11 +142,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
       statut: 'SUCCESSFUL',
     };
 
+    this.subscriptionSuccesM = this.statistiqueService
+      .getTransactionTotalMomo(ca2)
+      .subscribe({
+        next: (total) => {
+          this.tottalTransactionSuccess = total;
+        },
+      });
+
     this.subscriptionSuccesA = this.statistiqueService
       .getTransactionTotal(ca)
       .subscribe({
         next: (total) => {
-          val1 = total;
+          this.tottalTransactionSuccess = this.tottalTransactionSuccess + total;
+          console.log('TOTAL trans Succes:', this.tottalTransactionSuccess);
+
+          // Recuperer les status échoués
+          this.getTotalTransaction()
+          this.tottalTransactionEchec = this.tottalTransaction-this.tottalTransactionSuccess
         },
       });
 
