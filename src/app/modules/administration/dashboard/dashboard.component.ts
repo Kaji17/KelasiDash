@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   subscriptionCount: Subscription;
   chiffreAffaire!: number;
-  tottalTransaction!: any;
+  tottalTransaction: number;
   tottalTransactionSuccess!: number;
   tottalTransactionEchec!: number;
   tottalTransactionPending!: number;
@@ -34,6 +34,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   closable: boolean;
   dateDebut: Date;
   iconsverif: string = 'pi pi-check';
+
+  // SUSCRIBE
+  subscriptionATotalamount: Subscription;
+  subscriptionCountAirStat: Subscription;
+  subscriptionCountMoMoSta: Subscription;
 
   constructor(
     private configService: Configurable,
@@ -79,8 +84,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }, 1);
   }
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-    this.subscriptionCount.unsubscribe();
+    this.subscriptionATotalamount.unsubscribe();
+    this.subscriptionCountMoMoSta.unsubscribe();
+    this.subscriptionCountAirStat.unsubscribe();
   }
 
   // Fonction donnant un effet de compte au chiffre d'affaire
@@ -97,13 +103,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // Recuperer le nombre total de toute les transactions
   getTotalTransaction() {
-    console.log('YOYO',this.getTotalTransactionM())
-    this.subscriptionCount = this.statistiqueService
+    let total1: number;
+    this.subscriptionCountMoMoSta = this.statistiqueService
+      .getTransactionTotalMomo()
+      .subscribe({
+        next: (total) => {
+          total1 = total;
+          console.log('le :', total1);
+        },
+      });
+    this.subscriptionCountAirStat = this.statistiqueService
       .getTransactionTotal()
       .subscribe({
         next: (total) => {
-          console.log('Total__Trans:', total);
-          this.tottalTransaction = total;
+          console.log('le 2 :', total);
+          this.tottalTransaction = total + total1;
+          console.log('Total__Trans_final:', this.tottalTransaction);
         },
       });
   }
