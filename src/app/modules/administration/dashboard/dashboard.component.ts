@@ -1,5 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  switchMap,
+  takeLast,
+  tap,
+} from 'rxjs';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { Configurable } from 'src/app/core/config';
 import { StatistiqueService } from 'src/app/shared/services/statistique.service';
@@ -12,11 +19,14 @@ import { __values } from 'tslib';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   data: any;
+  tabDat: any = [];
   chartOptions: any;
   chiffreAffaire!: number;
   tottalTransaction: number;
+  tottalTransactionAirt: number;
+  tottalTransactionMoMo: number;
   tottalTransactionSuccess!: number;
-  tottalTransactionEchec!: number;
+  tottalTransactionEchec: number;
   tottalTransactionPending!: number;
   tottalTransactionSuscriber!: number;
   tottalTransactionProblem!: number;
@@ -37,6 +47,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   subscriptionATotalamount: Subscription;
   subscriptionCountAirStat: Subscription;
   subscriptionCountMoMoSta: Subscription;
+  subscriptionSuccesA: Subscription;
+  subscriptionSuccesM: Subscription;
+  subscriptionCountSMS: Subscription;
 
   constructor(
     private configService: Configurable,
@@ -44,17 +57,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+
     this.objChiffreaffaire = {};
+    this.tottalTransaction = 0;
     this.getTotalTransaction();
     this.getChiffreAffaireAirtimeMoMo();
-    this.getTotalTransactionM();
     this.tottalTransactionSuccess = 0;
     this.tottalTransactionEchec = 0;
+    this.tottalTransactionMoMo = 0;
+    this.getTotalTransactionM();
+    this.tottalTransactionAirt = 0;
+    this.getTotalTransactionA();
     this.tottalTransactionPending = 0;
     this.tottalTransactionProblem = 0;
     this.tottalTransactionSuscriber = 0;
-    this.getTotalTransactionEchec();
-    this.tottalTransaction = 0;
+
     this.CA = 0;
     this.chiffreAffaire = 0;
     this.TT = 0;
@@ -63,16 +80,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.totalEchec = 250;
     this.titleAppMobile = 'Résumé transaction App mobile';
     this.titleUSSD = 'Résumé transaction USSD';
-    this.data = {
-      datasets: [
-        {
-          data: [11, 16],
-          backgroundColor: ['#EE6060', '#39A74B'],
-          label: 'My dataset',
-        },
-      ],
-      labels: ['Echec', 'Succes'],
-    };
+    this.tabDat = [];
+    localStorage.setItem('tabData', JSON.stringify(this.tabDat));
+    this.getTabData();
   }
   countagge() {
     this.countCA = setInterval(() => {
@@ -82,7 +92,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptionATotalamount.unsubscribe();
     this.subscriptionCountMoMoSta.unsubscribe();
-    this.subscriptionCountAirStat.unsubscribe();
+    this.subscriptionSuccesM.unsubscribe();
+    // this.subscriptionSuccesA.unsubscribe();
+    this.subscriptionCountSMS.unsubscribe();
   }
 
   // Fonction donnant un effet de compte au chiffre d'affaire
@@ -105,18 +117,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (total) => {
           total1 = total;
-          console.log('le :', total1);
+
+          this.subscriptionATotalamount = this.statistiqueService
+          .getTransactionTotal()
+          .subscribe({
+            next: (total) => {
+              this.tottalTransaction = total + total1;
+              console.log('Total__Trans_final:', this.tottalTransaction);
+              this.getTotalTransactionSuccessEchec()
+            },
+          });
         },
       });
-    this.subscriptionCountAirStat = this.statistiqueService
-      .getTransactionTotal()
-      .subscribe({
-        next: (total) => {
-          console.log('le 2 :', total);
-          this.tottalTransaction = total + total1;
-          console.log('Total__Trans_final:', this.tottalTransaction);
-        },
-      });
+
   }
 
   // Recuperer le nombre total des transaction par status
@@ -147,50 +160,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (total) => {
           this.tottalTransactionSuccess = total;
+          this.statistiqueService
+          .getTransactionTotal(ca)
+          .subscribe({
+            next: (total) => {
+              this.tottalTransactionSuccess = this.tottalTransactionSuccess + total;
+              console.log('TOTAL trans Succes:', this.tottalTransactionSuccess);
+    
+              // Recuperer les status échoués
+              // this.getTotalTransaction()
+              this.tottalTransactionEchec =
+                this.tottalTransaction - this.tottalTransactionSuccess;
+            },
+          });
+    
         },
       });
 
-    this.subscriptionSuccesA = this.statistiqueService
-      .getTransactionTotal(ca)
-      .subscribe({
-        next: (total) => {
-          this.tottalTransactionSuccess = this.tottalTransactionSuccess + total;
-          console.log('TOTAL trans Succes:', this.tottalTransactionSuccess);
-
-          // Recuperer les status échoués
-          this.getTotalTransaction()
-          this.tottalTransactionEchec = this.tottalTransaction-this.tottalTransactionSuccess
-        },
-      });
-
-    this.subscriptionSuccesM = this.statistiqueService.getTransactionTotalMomo(ca2).subscribe({
-      next: total =>{
-        this.tottalTransactionSuccess = val1+total
-        console.log('TOTAL trans Succes:', this.tottalTransactionSuccess)
-      }
-    })
-
+   
     console.log('TOTAL CHIFFRE AFFAIRE: ', this.tottalTransactionSuccess);
-  }
-
-  getTotalTransactionEchec() {
-    let ca1 = {
-      statut: 'Pending',
-    };
-    let ca2 = {
-      statut: 'Problem with getting account details.',
-    };
-    let ca3 = {
-      statut: 'Subscriber has insufficient balance',
-    };
-    let val1;
-    let val2;
-    let val3;
-    val1 = this.getTotalTransactionStatus(ca1);
-    val2 = this.getTotalTransactionStatus(ca2);
-    val3 = this.getTotalTransactionStatus(ca3);
-
-    this.tottalTransactionEchec = val1 + val2 + val3;
   }
 
   // Recuperer le nombre total de toute les transactions par MoMo
@@ -198,6 +186,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.statistiqueService.getTransactionTotalMomo().subscribe({
       next: (value) => {
         console.log(`Transaction MoMo, ${value}`);
+        this.tottalTransactionMoMo = value;
+      },
+    });
+  }
+
+  // Recuperer le nombre total de toute les transactions par USSD
+  getTotalTransactionA() {
+    this.statistiqueService.getTransactionTotal().subscribe({
+      next: (value) => {
+        console.log(`Transaction USSD, ${value}`);
+        this.tottalTransactionAirt = value;
       },
     });
   }
