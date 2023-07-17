@@ -23,6 +23,10 @@ style="flex-direction: column; border: 1px solid #e9ebf8"
     [width]="'314px'"
     [height]="'309px'"
   ></p-chart>
+
+  <ng-container *ngIf="!data" >
+    <img src="assets/img/Loading_icon.gif" alt="Loading_icon">
+  </ng-container>
 </div>
 
 <div class="grid grid-cols-4 gap-x-4">
