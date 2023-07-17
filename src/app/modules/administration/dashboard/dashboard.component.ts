@@ -227,6 +227,51 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Recupération des données pour le diagramme circulaire
+  getTabData() {
+    let obj1 = {
+      statut: 'UNDELIV',
+    };
+    let obj2 = {
+      statut: 'EXPIRED',
+    };
+    let obj3 = {
+      statut: 'DELIVRD',
+    };
+    this.subscriptionCountSMS = this.statistiqueService
+      .getTauxSms(obj1)
+      .subscribe({
+        next: (value) => {
+          // val1 = value.taux.toString();
+          console.log('ledd  cjf;', this.formatTaux(value));
+          this.tabDat.push(this.formatTaux(value));
+
+          this.statistiqueService.getTauxSms(obj2).subscribe({
+            next: (value) => {
+              this.tabDat.push(this.formatTaux(value));
+              this.statistiqueService.getTauxSms(obj3).subscribe({
+                next: (value) => {
+                  this.tabDat.push(this.formatTaux(value));
+                  localStorage.setItem('tabData', JSON.stringify(this.tabDat));
+                  console.log('tab lo:,', this.tabDat);
+                  this.data = {
+                    datasets: [
+                      {
+                        data: this.tabDat,
+                        backgroundColor: ['#EE6060', '#eab308 ', '#39A74B'],
+                        label: 'My dataset',
+                      },
+                    ],
+                    labels: ['UNDELIVED', 'EXPIRED', 'DELIVED'],
+                  };
+                },
+              });
+            },
+          });
+        },
+      });
+  }
+
   // Formatage de la date en yyyy-MM-dd HH:mm:ss.SSS
   formatDateTime(date: Date): string {
     const year = date.getFullYear();
