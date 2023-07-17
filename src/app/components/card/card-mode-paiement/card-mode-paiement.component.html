@@ -17,7 +17,8 @@ style="flex-direction: column; border: 1px solid #e9ebf8"
 
 <div class="polar flex justify-center">
   <p-chart
-    type="polarArea"
+  *ngIf="data"
+    type="pie"
     [data]="data"
     [options]="chartOptions"
     [width]="'314px'"
