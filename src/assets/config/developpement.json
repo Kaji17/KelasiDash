@@ -20,6 +20,9 @@
       "STAT_MOMO_MONTANT_GET": "momo/totalamount",
 
       "comment": "------------ OPERATIONS SMS ---------------",
-      "SMS_GET": "sms/status"
+      "SMS_ALL_GET": "sms",
+      "SMS_STATUS_GET": "sms/status",
+      "SMS_COUNT_GET": "sms/count",
+      "SMS_TAUX": "sms/taux"
     }
   }
