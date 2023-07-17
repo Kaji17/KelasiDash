@@ -13,8 +13,6 @@ import { __values } from 'tslib';
 export class DashboardComponent implements OnInit, OnDestroy {
   data: any;
   chartOptions: any;
-  subscription: Subscription;
-  subscriptionCount: Subscription;
   chiffreAffaire!: number;
   tottalTransaction: number;
   tottalTransactionSuccess!: number;
@@ -46,8 +44,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getChiffreAffaireMomo();
-
     this.objChiffreaffaire = {};
     this.getTotalTransaction();
     this.getChiffreAffaireAirtimeMoMo();

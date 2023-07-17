@@ -36,7 +36,7 @@
         <span
           class="text-[#FFDC0E] text-[27px] text-center w-full max-xl:w-auto max-[980px]:w-full"
           style="font-weight: bold"
-          >{{ chiffreAffaire }} FCFA
+          >{{ chiffreAffaire| number }} FCFA
           <ng-container *ngIf="chiffreAffaire == 0">
             <i class="pi pi-spin pi-spinner" style="font-size: 1.5rem"></i>
           </ng-container>
@@ -48,7 +48,7 @@
         <span
           class="text-[#FFDC0E] text-[27px] text-center w-full max-xl:w-auto max-[980px]:w-full"
           style="font-weight: bold"
-          >{{ tottalTransaction }}</span
+          >{{ tottalTransaction | number}}</span
         >
       </div>
     </div>
