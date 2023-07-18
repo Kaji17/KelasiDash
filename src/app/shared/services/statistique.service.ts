@@ -87,21 +87,33 @@ export class StatistiqueService {
    * @returns Observable<any[]>
    * @author kaji17
    */
-  // Recuperer la liste des differens status de transaction par Airtimes
   public getAllStatusMomo(): Observable<any[]> {
     return this.http.get<any[]>(
       this.configService.getApi('STAT_MOMO_STATUS_GET')
     );
   }
 
+    /**
+   * Recuperer les taux des transactions par appMobile echec, succes par momo
+   * @returns Observable<any>
+   * @author kaji17
+   */
+  public getAllTauxMomo(obj:any): Observable<any> {
+    return this.http.get<any>(
+      this.configService.getApi('STAT_MOMO_TAUX_GET'),{
+        params: obj,
+      }
+    );
+  }
+
   // ********SMS*********//
   /**
-   * Recuperer le nombre total des SMS
+   * Recuperer les taux des SMS en fonction des status
    * @param obj
    * @returns Observable<number>
    * @author kaji17
    */
-  public getTauxSms(obj?: any): Observable<any> {
+  public getTauxSms(obj: any): Observable<any> {
     return this.http.get<any>(
       this.configService.getApi('SMS_TAUX'),
       {
