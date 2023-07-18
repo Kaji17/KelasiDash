@@ -1,3 +1,6 @@
+/**
+  * COULEUR ROUGE
+  */
 .card-red:hover {
   animation-name: scale-content;
   animation-duration: 1s;
@@ -39,6 +42,9 @@
   }
 }
 
+/**
+  * COULEUR VERTE
+  */
 .card-green:hover {
   animation-name: scale-content;
   animation-duration: 1s;
@@ -80,6 +86,96 @@
   }
 }
 
+
+/**
+  * COULEUR BLEU
+  */
+  .card-blue:hover {
+    animation-name: scale-content;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-direction: alternate;
+    .blueLineB {
+      animation-name: shutter-in-top-B;
+      animation-duration: 0.4s;
+      animation-fill-mode: forwards;
+      animation-direction: alternate;
+    }
+    div {
+      color: white;
+      transition-duration: 0.4s;
+      animation-direction: alternate;
+  
+      > span {
+        color: white;
+        transition-duration: 0.4s;
+        animation-direction: alternate;
+      }
+      > button {
+        color: white;
+        border-color: white;
+        animation-direction: alternate;
+      }
+    }
+    .bBlue {
+      background-color: #07506A;
+    }
+  }
+  .blueLineB {
+    background-color: #07506A;
+  }
+  .bBlue-l {
+    background-color: rgba(142, 152, 168, 0.22);
+    > span {
+      color: #07506A;
+    }
+  }
+
+
+  /**
+  * COULEUR BLEU
+  */
+  .card-yellow:hover {
+    animation-name: scale-content;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-direction: alternate;
+    .yellowLineB {
+      animation-name: shutter-in-top-Y;
+      animation-duration: 0.4s;
+      animation-fill-mode: forwards;
+      animation-direction: alternate;
+    }
+    div {
+      color: white;
+      transition-duration: 0.4s;
+      animation-direction: alternate;
+  
+      > span {
+        color: white;
+        transition-duration: 0.4s;
+        animation-direction: alternate;
+      }
+      > button {
+        color: white;
+        border-color: white;
+        animation-direction: alternate;
+      }
+    }
+    .bYellow {
+      background-color: #EAB309;
+    }
+  }
+  .yellowLineB {
+    background-color: #EAB309;
+  }
+  .bYellow-l {
+    background-color: rgba(234, 179, 9, 0.22);
+    > span {
+      color: #EAB309;
+    }
+  }
+
 @keyframes shutter-in-top {
   0% {
     height: 6px;
@@ -100,24 +196,61 @@
 }
 
 @keyframes shutter-in-top-G {
-    0% {
-      height: 6px;
-      transform-origin: bottom;
-      background-color: white;
-      top: 206px;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-    }
-    100% {
-      height: 212px;
-      transform-origin: bottom;
-      background-color: #39a74b;
-      top: 0;
-      border-top-left-radius: 0.5rem;
-      border-top-right-radius: 0.5rem;
-    }
+  0% {
+    height: 6px;
+    transform-origin: bottom;
+    background-color: white;
+    top: 206px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
-  
+  100% {
+    height: 212px;
+    transform-origin: bottom;
+    background-color: #39a74b;
+    top: 0;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+  }
+}
+
+@keyframes shutter-in-top-B {
+  0% {
+    height: 6px;
+    transform-origin: bottom;
+    background-color: white;
+    top: 206px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  100% {
+    height: 212px;
+    transform-origin: bottom;
+    background-color: #07506A;
+    top: 0;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+  }
+}
+
+@keyframes shutter-in-top-Y {
+  0% {
+    height: 6px;
+    transform-origin: bottom;
+    background-color: white;
+    top: 206px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  100% {
+    height: 212px;
+    transform-origin: bottom;
+    background-color: #EAB309;
+    top: 0;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+  }
+}
 
 @keyframes scale-content {
   0% {

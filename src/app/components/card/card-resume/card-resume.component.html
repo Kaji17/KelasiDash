@@ -2,11 +2,11 @@
 <div
 class="w-[174px] h-[212px] bg-white rounded-lg shadow flex items-center justify-evenly relative z-10 cursor-default"
 style="flex-direction: column"
-[ngClass]="typeCard==='green'?'card-green':'card-red'"
+[ngClass]="this.cardStyle"
 >
 <div
   class="bRed w-[127px] h-[36px] bg-opacity-20 rounded flex items-center justify-center relative z-10"
-  [ngClass]="typeCard==='green'?'bGreen bGreen-l':'bRed bRed-l'"
+  [ngClass]="this.bgStyle"
 >
   <span class="text-center text-[17px]">{{title | titlecase}}</span>
 </div>
@@ -27,6 +27,6 @@ style="flex-direction: column"
 <!-- LIGNE ROUGE EN BAS -->
 <div
   class="w-[174px] h-[6px] left-[0px] top-[206px] absolute rounded-bl-lg rounded-br-lg shadow z-0"
-  [ngClass]="typeCard==='green'?'greenLineB':'redLineB'"
+  [ngClass]="this.lineB"
 ></div>
 </div>
