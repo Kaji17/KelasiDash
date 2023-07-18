@@ -400,6 +400,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       });
   }
 
+  getDataProgressData(){
+    
+  }
   // Formatage de la date en yyyy-MM-dd HH:mm:ss.SSS
   formatDateTime(date: Date): string {
     const year = date.getFullYear();
