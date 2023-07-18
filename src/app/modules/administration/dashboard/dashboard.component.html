@@ -88,7 +88,7 @@
           [title]="'MoMo'"
           [total1]="tottalTransactionMoMo"
           [total2]="tottalTransaction"
-          [typeCard]="'green'"
+          [typeCard]="'yellow'"
         ></app-card-resume>
 
         <!-- CARD CARD USSD -->
@@ -96,7 +96,7 @@
           [title]="'USSD'"
           [total1]="tottalTransactionAirt"
           [total2]="tottalTransaction"
-          [typeCard]="'red'"
+          [typeCard]="'blue'"
         ></app-card-resume>
       </div>
     </div>
@@ -116,14 +116,14 @@
     <div class="flex gap-x-3 max-xl:grid max-xl:gap-y-3 max-[980px]:flex max-[980px]:gap-x-3 max-[768px]:grid">
       <app-card-methode-paiement
         [title]="titleAppMobile"
-        [percentS]="90"
-        [percentE]="10"
+        [percentS]="percentAppmobilS"
+        [percentE]="percentAppmobilE"
       ></app-card-methode-paiement>
 
       <app-card-methode-paiement
         [title]="titleUSSD"
-        [percentS]="49"
-        [percentE]="51"
+        [percentS]="percentUssdS"
+        [percentE]="percentUssdE"
       ></app-card-methode-paiement>
     </div>
   </section>
