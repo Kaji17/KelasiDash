@@ -70,6 +70,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.subscriptionCountMoMoTaux.unsubscribe();
   }
 
+  // Initialisation du localStorage
   initDataLocalStorage() {
     localStorage.setItem('tabData', JSON.stringify(this.tabDat));
     if (!localStorage.getItem('lastCAData')) {
@@ -81,6 +82,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+// Initialisation des valeurs
   initValue() {
     this.objChiffreaffaire = {};
     this.tottalTransaction = 0;
@@ -101,6 +103,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.titleUSSD = 'Résumé transaction USSD';
     this.tabDat = [];
   }
+
+  // Methode pour donner un effet de comptage
   countagge() {
     this.countCA = setInterval(() => {
       this.verify();
