@@ -1,16 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
-  BehaviorSubject,
-  Observable,
-  Subscription,
-  switchMap,
-  takeLast,
-  tap,
+  Subscription
 } from 'rxjs';
-import { ComponentsModule } from 'src/app/components/components.module';
-import { Configurable } from 'src/app/core/config';
 import { StatistiqueService } from 'src/app/shared/services/statistique.service';
-import { __values } from 'tslib';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,9 +19,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   tottalTransactionMoMo: number;
   tottalTransactionSuccess!: number;
   tottalTransactionEchec: number;
-  tottalTransactionPending!: number;
-  tottalTransactionSuscriber!: number;
-  tottalTransactionProblem!: number;
   TT!: number;
   totalEchec!: number;
   progressMomo!: number;
@@ -42,6 +31,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   closable: boolean;
   dateDebut: Date;
   iconsverif: string = 'pi pi-check';
+  percentAppmobilS: number;
+  percentAppmobilE: number;
+  percentUssdS: number;
+  percentUssdE: number;
 
   // SUSCRIBE
   subscriptionATotalamount: Subscription;
@@ -50,51 +43,68 @@ export class DashboardComponent implements OnInit, OnDestroy {
   subscriptionSuccesA: Subscription;
   subscriptionSuccesM: Subscription;
   subscriptionCountSMS: Subscription;
+  subscriptionTauxByDevice: Subscription;
+  subscriptionCountMoMoTaux: Subscription;
 
-  constructor(
-    private configService: Configurable,
-    private statistiqueService: StatistiqueService
-  ) {}
+  constructor(private statistiqueService: StatistiqueService) {}
 
   ngOnInit(): void {
+    this.initDataLocalStorage();
+    this.initValue();
+    this.refreshData();
+    this.getTotalTransaction();
+    this.getTotalTransactionM();
+    this.getTotalTransactionA();
+    this.getTauxMoMoByChannel();
+    this.getTauxUSSDByChannel();
+    this.getTabData();
+  }
 
+  ngOnDestroy(): void {
+    this.subscriptionATotalamount.unsubscribe();
+    this.subscriptionCountMoMoSta.unsubscribe();
+    this.subscriptionSuccesM.unsubscribe();
+    this.subscriptionSuccesA.unsubscribe();
+    this.subscriptionCountSMS.unsubscribe();
+    this.subscriptionTauxByDevice.unsubscribe();
+    this.subscriptionCountMoMoTaux.unsubscribe();
+  }
+
+  initDataLocalStorage() {
+    localStorage.setItem('tabData', JSON.stringify(this.tabDat));
+    if (!localStorage.getItem('lastCAData')) {
+      let obj = {
+        value: '',
+        lastDate: '',
+      };
+      localStorage.setItem('lastCAData', JSON.stringify(obj));
+    }
+  }
+
+  initValue() {
     this.objChiffreaffaire = {};
     this.tottalTransaction = 0;
-    this.getTotalTransaction();
-    this.getChiffreAffaireAirtimeMoMo();
     this.tottalTransactionSuccess = 0;
     this.tottalTransactionEchec = 0;
     this.tottalTransactionMoMo = 0;
-    this.getTotalTransactionM();
     this.tottalTransactionAirt = 0;
-    this.getTotalTransactionA();
-    this.tottalTransactionPending = 0;
-    this.tottalTransactionProblem = 0;
-    this.tottalTransactionSuscriber = 0;
-
+    this.percentAppmobilS = 0;
+    this.percentAppmobilE = 0;
+    this.percentUssdS = 0;
+    this.percentUssdE = 0;
     this.CA = 0;
     this.chiffreAffaire = 0;
     this.TT = 0;
     this.progressMomo = 70;
     this.progressUssd = 30;
-    this.totalEchec = 250;
     this.titleAppMobile = 'Résumé transaction App mobile';
     this.titleUSSD = 'Résumé transaction USSD';
     this.tabDat = [];
-    localStorage.setItem('tabData', JSON.stringify(this.tabDat));
-    this.getTabData();
   }
   countagge() {
     this.countCA = setInterval(() => {
       this.verify();
-    }, 1);
-  }
-  ngOnDestroy(): void {
-    this.subscriptionATotalamount.unsubscribe();
-    this.subscriptionCountMoMoSta.unsubscribe();
-    this.subscriptionSuccesM.unsubscribe();
-    // this.subscriptionSuccesA.unsubscribe();
-    this.subscriptionCountSMS.unsubscribe();
+    }, 0.2);
   }
 
   // Fonction donnant un effet de compte au chiffre d'affaire
@@ -119,17 +129,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
           total1 = total;
 
           this.subscriptionATotalamount = this.statistiqueService
-          .getTransactionTotal()
-          .subscribe({
-            next: (total) => {
-              this.tottalTransaction = total + total1;
-              console.log('Total__Trans_final:', this.tottalTransaction);
-              this.getTotalTransactionSuccessEchec()
-            },
-          });
+            .getTransactionTotal()
+            .subscribe({
+              next: (total) => {
+                this.tottalTransaction = total + total1;
+                console.log('Total__Trans_final:', this.tottalTransaction);
+                this.getTotalTransactionSuccessEchec();
+              },
+            });
         },
       });
-
   }
 
   // Recuperer le nombre total des transaction par status
@@ -160,24 +169,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (total) => {
           this.tottalTransactionSuccess = total;
-          this.statistiqueService
-          .getTransactionTotal(ca)
-          .subscribe({
+          this.statistiqueService.getTransactionTotal(ca).subscribe({
             next: (total) => {
-              this.tottalTransactionSuccess = this.tottalTransactionSuccess + total;
+              this.tottalTransactionSuccess =
+                this.tottalTransactionSuccess + total;
               console.log('TOTAL trans Succes:', this.tottalTransactionSuccess);
-    
+
               // Recuperer les status échoués
               // this.getTotalTransaction()
               this.tottalTransactionEchec =
                 this.tottalTransaction - this.tottalTransactionSuccess;
             },
           });
-    
         },
       });
 
-   
     console.log('TOTAL CHIFFRE AFFAIRE: ', this.tottalTransactionSuccess);
   }
 
@@ -320,8 +326,68 @@ export class DashboardComponent implements OnInit, OnDestroy {
                         label: 'My dataset',
                       },
                     ],
-                    labels: ['UNDELIVED', 'EXPIRED', 'DELIVED'],
+                    labels: ['NON LIVRÉS', 'EXPIRÉ', 'LIVRÉ'],
                   };
+                },
+              });
+            },
+          });
+        },
+      });
+  }
+
+  // Recupération les taux d'echec et de succes a partir du canal de paiement AppMobile ou USSD
+  getTauxMoMoByChannel() {
+    let obj1 = {
+      canal: 'appmobile',
+      statut: 'SUCCESSFUL',
+    };
+    this.subscriptionTauxByDevice = this.statistiqueService
+      .getAllTauxMomo(obj1)
+      .subscribe({
+        next: (value) => {
+          this.percentAppmobilS = this.formatTaux(value);
+          this.percentAppmobilE = 100 - this.percentAppmobilS;
+        },
+      });
+  }
+
+  // Recupération les taux d'echec et de succes a partir du canal de paiement AppMobile ou USSD
+  getTauxUSSDByChannel() {
+    let totalUSSD: number;
+    let totalUssdSucces: number;
+    let obj1 = {
+      canal: 'ussd',
+    };
+    let obj2 = {
+      canal: 'ussd',
+      statut: 'SUCCESSFUL',
+    };
+    let obj3 = {
+      statut: 'Success',
+    };
+
+    this.subscriptionCountMoMoTaux = this.statistiqueService
+      .getTransactionTotalMomo(obj1)
+      .subscribe({
+        next: (value) => {
+          totalUSSD = value;
+          this.statistiqueService.getTransactionTotal().subscribe({
+            next: (value) => {
+              totalUSSD = totalUSSD + value;
+              console.log('Total trans  by USSD:', totalUSSD);
+              this.statistiqueService.getTransactionTotalMomo(obj2).subscribe({
+                next: (value) => {
+                  totalUssdSucces = value;
+                  this.statistiqueService.getTransactionTotal(obj3).subscribe({
+                    next: (value) => {
+                      totalUssdSucces = totalUssdSucces + value;
+                      this.percentUssdS = Math.floor(
+                        (totalUssdSucces * 100) / totalUSSD
+                      );
+                      this.percentUssdE = Math.floor(100 - this.percentUssdS);
+                    },
+                  });
                 },
               });
             },
