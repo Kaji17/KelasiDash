@@ -1,1 +1,7 @@
-<p>pagination works!</p>
+
+<div class="flex align-items-center justify-center mt-5">
+    <span class="mx-1 text-color text-center mt-3" >Élements par page </span>
+    <p-dropdown [options]="options" optionLabel="label" optionValue="value" [(ngModel)]="rows" (ngModelChange)="first = 0" (onChange)="onElementSelectChange($event)"></p-dropdown>
+    <p-paginator [style]="{'padding-top':'0','padding-bottom':'0'}" [first]="first" [rows]="rows" [totalRecords]="total" (onPageChange)="onPageChange($event)" [showCurrentPageReport]="true"
+        currentPageReportTemplate="{first} - {last} of {totalRecords}" [showPageLinks]="false" [showFirstLastIcon]="false" ></p-paginator>
+</div>
