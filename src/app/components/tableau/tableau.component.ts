@@ -1,4 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Table } from 'primeng/table';
 
 @Component({
@@ -6,8 +14,15 @@ import { Table } from 'primeng/table';
   templateUrl: './tableau.component.html',
   styleUrls: ['./tableau.component.scss'],
 })
-export class TableauComponent implements OnInit {
+export class TableauComponent implements OnInit, OnChanges {
+  paiementMode: string;
   @Input() LisTransaction!: any[];
+  @Input() ModePaiement!: string;
+  @Output() newItemEvent = new EventEmitter();
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.paiementMode = this.ModePaiement;
+  }
 
   representatives!: any[];
 
@@ -17,51 +32,38 @@ export class TableauComponent implements OnInit {
 
   device!: any[];
 
-  paiement!: any[]
+  paiement!: any[];
 
   loading: boolean = false;
 
   activityValues: number[] = [0, 100];
 
-  matricule!: any
+  matricule!: any;
 
-  founded!: number
+  metaKeySelection: boolean = true;
 
   ngOnInit(): void {
-    this.founded = 10
-    this.representatives = [
-      { name: 'Amy Elsner', image: 'amyelsner.png' },
-      { name: 'Anna Fali', image: 'annafali.png' },
-      { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
-      { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
-      { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
-      { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
-      { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
-      { name: 'Onyama Limba', image: 'onyamalimba.png' },
-      { name: 'Stephen Shaw', image: 'stephenshaw.png' },
-      { name: 'Xuxue Feng', image: 'xuxuefeng.png' },
-    ];
-
     this.statuses = [
       { label: 'Payé', value: 'Payé' },
-      { label: 'Echoué', value: 'Echoué' }
+      { label: 'Echoué', value: 'Echoué' },
+      { label: 'En Attente', value: 'En Attente' },
     ];
 
     this.examens = [
       { label: 'CONCOURS', value: 'CONCOURS' },
-      { label: 'BAC', value: 'BAC' },
+      { label: 'BACG', value: 'BACG' },
       { label: 'BEPC', value: 'BEPC' },
-      { label: 'CEPE', value: 'CEPE' }
+      { label: 'CEPE', value: 'CEPE' },
     ];
 
     this.device = [
-      { label: 'App mobile', value: 'App mobile' },
-      { label: 'Airtimes', value: 'airtimes' }
+      { label: 'APP MOBILE', value: 'APP MOBILE' },
+      { label: 'USSD', value: 'USSD' },
     ];
 
     this.paiement = [
       { label: 'MoMo', value: 'MoMo' },
-      { label: 'Airtimes', value: 'airtimes' }
+      { label: 'Airtime', value: 'Airtime' },
     ];
   }
 
@@ -75,7 +77,7 @@ export class TableauComponent implements OnInit {
       case 'concours':
         return 'danger';
 
-      case 'bac':
+      case 'bacg':
         return 'success';
 
       case 'bepc':
@@ -86,5 +88,30 @@ export class TableauComponent implements OnInit {
       default:
         return null;
     }
+  }
+
+  // DONNE LA COULEUR DU TAG EN FOCTION DE L'EXAMEN
+  getSeverityS(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'echoué':
+        return 'danger';
+
+      case 'payé':
+        return 'success';
+
+      case 'en attente':
+        return 'warning';
+      default:
+        return null;
+    }
+  }
+
+  handleChange(e) {
+    let isChecked = e.checked;
+    this.addNewItem(isChecked);
+  }
+
+  addNewItem(value: boolean) {
+    this.newItemEvent.emit(value);
   }
 }

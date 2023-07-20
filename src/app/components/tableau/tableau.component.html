@@ -1,18 +1,19 @@
-<div>
+<div class="max-w-[80%] m-auto">
   <p-table
-  [scrollable]="true" [tableStyle]="{'min-width': '60rem'}"
+    [scrollable]="true"
+    [tableStyle]="{ 'min-width': '75rem' }"
     #dt1
     [value]="LisTransaction"
     dataKey="id"
-    [rows]="10"
-    [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[10, 25, 50]"
+    selectionMode="single"
     [loading]="loading"
-    [paginator]="true"
-    currentPageReportTemplate="{first} to {last} of {totalRecords}"
-        [globalFilterFields]="[
-      'name',
-      'country.name',
+    [globalFilterFields]="[
+      'matricule',
+      'msisdn',
+      'idTrans',
+      'referenceId',
+      'numero',
+      'date',
       'representative.name',
       'status'
     ]"
@@ -28,49 +29,52 @@
           icon="pi pi-filter-slash"
           (click)="clear(dt1)"
         ></button>
-        <div class="flex">
-          <span>
-            <p>Trouvé: {{ founded }}</p>
-          </span>
-
-          <!-- BOUTTON DOWNLOAD -->
-          <p-button
-            icon="pi pi-download"
-            class="btnDownLoad flex items-center"
-            [style]="{ padding: '0' }"
-          ></p-button>
+        <div class="flex items-center justify-center">
+          <div class="flex items-center justify-center">
+            <p-inputSwitch
+              (onChange)="handleChange($event)"
+              [(ngModel)]="metaKeySelection"
+              label="MetaKey"
+            ></p-inputSwitch>
+            <span
+              [ngClass]="ModePaiement == 'Airtime' ? 'text-[#5046E4]' : ''"
+              class="ps-3"
+              >{{ ModePaiement }}</span
+            >
+          </div>
         </div>
-
-        <!-- CHAMPS DE RECHERCHE PAR MOT CLE -->
-        <span class="p-input-icon-left">
-          <i class="pi pi-search"></i>
-          <input
-            pInputText
-            type="text"
-            [(ngModel)]="matricule"
-            placeholder="Search Matricule"
-          />
-        </span>
       </div>
     </ng-template>
     <ng-template pTemplate="header">
+      <!-- HEADER POUR LES LABELS -->
       <tr>
         <th>
           <div class="flex align-items-center">
             Matricule
             <p-columnFilter
               type="text"
-              field="name"
+              field="matricule"
               display="menu"
             ></p-columnFilter>
           </div>
         </th>
         <th>
-          <div class="flex align-items-center">
-            ID Transaction
+          <div
+            class="flex align-items-center"
+            *ngIf="ModePaiement == 'Airtime'"
+          >
+            ID Trans
             <p-columnFilter
               type="text"
-              field="country.name"
+              field="idTrans"
+              display="menu"
+            ></p-columnFilter>
+          </div>
+          <div class="flex align-items-center" *ngIf="ModePaiement == 'MoMo'">
+            ID Trans
+            <p-columnFilter
+              type="text"
+              field="referenceId"
               display="menu"
             ></p-columnFilter>
           </div>
@@ -80,7 +84,7 @@
             Numéro
             <p-columnFilter
               type="text"
-              field="country.name"
+              field="msisdn"
               display="menu"
             ></p-columnFilter>
           </div>
@@ -90,7 +94,7 @@
             Date
             <p-columnFilter
               type="date"
-              field="date"
+              field="callbackDate"
               display="menu"
             ></p-columnFilter>
           </div>
@@ -98,7 +102,7 @@
         <th>
           <div class="flex align-items-center">
             Examen
-            <p-columnFilter field="examen" matchMode="equals" display="menu">
+            <p-columnFilter field="action" matchMode="equals" display="menu">
               <ng-template
                 pTemplate="filter"
                 let-value
@@ -124,8 +128,8 @@
 
         <th>
           <div class="flex align-items-center">
-            Device
-            <p-columnFilter field="device" matchMode="equals" display="menu">
+            Plateforme
+            <p-columnFilter field="transactionFrom" matchMode="equals" display="menu">
               <ng-template
                 pTemplate="filter"
                 let-value
@@ -151,17 +155,16 @@
             Cout
             <p-columnFilter
               type="numeric"
-              field="balance"
+              field="amount"
               display="menu"
               currency="XOF"
             ></p-columnFilter>
           </div>
         </th>
-
         <th>
           <div class="flex align-items-center">
-            Mode de paiement
-            <p-columnFilter field="device" matchMode="equals" display="menu">
+            Statut
+            <p-columnFilter field="status" matchMode="equals" display="menu">
               <ng-template
                 pTemplate="filter"
                 let-value
@@ -169,77 +172,114 @@
               >
                 <p-dropdown
                   [ngModel]="value"
-                  [options]="device"
+                  [options]="statuses"
                   (onChange)="filter($event.value)"
                   placeholder="Any"
                 >
-                  <!-- <ng-template let-option pTemplate="item">
-                                        <p-tag [value]="option.value" [severity]="getSeverity(option.label)"></p-tag>
-                                    </ng-template> -->
+                  <ng-template let-option pTemplate="item">
+                    <p-tag
+                      [value]="option.value"
+                      [severity]="getSeverityS(option.label)"
+                    ></p-tag>
+                  </ng-template>
                 </p-dropdown>
               </ng-template>
             </p-columnFilter>
           </div>
         </th>
+      </tr>
+
+      <!-- HEADER POUR LES INPUT RECHERCHE -->
+      <tr>
         <th>
-          <div class="flex align-items-center">
-            Statut
-            <p-columnFilter
-              type="boolean"
-              field="verified"
-              display="menu"
-            ></p-columnFilter>
-          </div>
+          <input
+            pInputText
+            type="text"
+            placeholder="Search Mat..."
+            class="w-full"
+          />
         </th>
-        <th></th>
+        <th>
+        </th>
+        <th>
+          <input
+            pInputText
+            type="text"
+            placeholder="Search Phone"
+            class="w-full"
+          />
+        </th>
+        <th>
+        </th>
+        <th>
+          <input
+            pInputText
+            type="text"
+            placeholder="Search Exam.."
+            class="w-full"
+          />
+        </th>
+        <th>
+          <input
+            pInputText
+            type="text"
+            placeholder="Search Plat.."
+            class="w-full"
+          />
+        </th>
+        <th>
+        </th>
+        <th>
+          <input
+            pInputText
+            type="text"
+            placeholder="Search Status"
+            class="w-full"
+          />
+        </th>
       </tr>
     </ng-template>
+
+    <!-- BODY -->
     <ng-template pTemplate="body" let-transaction>
       <tr>
-        <td>
-          {{ transaction.matricule }}
+        <td class="text-center">
+          {{ transaction.matricule | uppercase }}
         </td>
-        <td>
-          {{ transaction.idtransaction }}
+        <td class="" *ngIf="ModePaiement == 'Airtime'">
+          {{ transaction.transactionId }}
         </td>
-        <td>
-          {{ transaction.numero }}
+        <td class="" *ngIf="ModePaiement == 'MoMo'">
+          {{ transaction.referenceId }}
         </td>
-        <td>
-          {{ transaction.date | date : "MM/dd/yyyy HH:mm" }}
+        <td class="min-w-[185px]">
+          {{ transaction.msisdn | telephone }}
         </td>
-        <td>
+        <td class="min-w-[260px]">
+          {{ transaction.callbackDate | date : "MM/dd/yyyy HH:mm:ss" }}
+        </td>
+        <td class="text-center">
           <p-tag
-            [value]="transaction.examen"
-            [severity]="getSeverity(transaction.examen)"
+            [value]="transaction.action"
+            [severity]="getSeverity(transaction.action)"
           ></p-tag>
         </td>
         <td>
-          {{ transaction.device }}
+          {{ transaction.transactionFrom | uppercase }}
         </td>
         <td>
-          {{ transaction.cout }}
+          {{ transaction.amount }}
         </td>
-        <td>
-          {{ transaction.modepaiement }}
-        </td>
+        <!-- <td>
+          {{ transaction.registrationChannel }}
+        </td> -->
         <td class="text-center">
-          <i
-            class="pi"
-            [ngClass]="{
-              'text-[#39A74B]-500 pi-check-circle': transaction.verified,
-              'text-[#EE6060]-500 pi-times-circle': !transaction.verified
-            }"
-          ></i>
+          <p-tag
+            [value]="transaction.status"
+            [severity]="getSeverityS(transaction.status)"
+          ></p-tag>
         </td>
-
-        <td class="text-center">see more</td>
       </tr>
     </ng-template>
-    <!-- <ng-template pTemplate="emptymessage">
-      <tr>
-        <td colspan="7">No customers found.</td>
-      </tr>
-    </ng-template> -->
   </p-table>
 </div>

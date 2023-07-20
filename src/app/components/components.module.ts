@@ -21,28 +21,36 @@ import { CardMethodePaiementComponent } from './card/card-methode-paiement/card-
 import { CardModePaiementComponent } from './card/card-mode-paiement/card-mode-paiement.component';
 import { CardResumeComponent } from './card/card-resume/card-resume.component';
 import {TooltipModule} from 'primeng/tooltip';
+import { PaginatorModule } from 'primeng/paginator';
+import {InputSwitchModule} from 'primeng/inputswitch';
+import { SharedModule } from "../shared/shared.module";
+
+
 
 
 @NgModule({
-  declarations: [NavBarComponent, PaginationComponent, TableauComponent, CardResumeComponent, CardModePaiementComponent, CardMethodePaiementComponent],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    DividerModule,
-    AvatarModule,
-    AvatarGroupModule,
-    MenuModule,
-    ButtonModule,
-    TableModule,
-    InputTextModule,
-    CalendarModule,
-    DropdownModule,
-    TagModule,
-    ProgressBarModule,
-    ChartModule,
-    TooltipModule
-  ],
-  exports: [NavBarComponent, PaginationComponent,TableauComponent,CardResumeComponent,CardMethodePaiementComponent,CardModePaiementComponent],
+    declarations: [NavBarComponent, PaginationComponent, TableauComponent, CardResumeComponent, CardModePaiementComponent, CardMethodePaiementComponent],
+    exports: [NavBarComponent, PaginationComponent, TableauComponent, CardResumeComponent, CardMethodePaiementComponent, CardModePaiementComponent],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DividerModule,
+        AvatarModule,
+        AvatarGroupModule,
+        MenuModule,
+        ButtonModule,
+        TableModule,
+        InputTextModule,
+        CalendarModule,
+        DropdownModule,
+        TagModule,
+        ProgressBarModule,
+        ChartModule,
+        TooltipModule,
+        PaginatorModule,
+        InputSwitchModule,
+        SharedModule
+    ]
 })
 export class ComponentsModule {}
