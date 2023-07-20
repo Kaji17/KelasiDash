@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { HistoryService } from 'src/app/shared/services/history.service';
+import { StatistiqueService } from 'src/app/shared/services/statistique.service';
+import { UtilisService } from 'src/app/shared/services/utilis.service';
 
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss'],
 })
-export class HistoryComponent implements OnInit {
+export class HistoryComponent implements OnInit, OnDestroy {
   chiffreAffaire!: number;
   chiffreAffaireBac!: number;
   nbrFund!: number;
@@ -15,22 +19,37 @@ export class HistoryComponent implements OnInit {
   rangeDates!: Date[];
   statuts!: any[];
   selectedStatuts!: string;
+  totalPage: number;
+  listeAirtime: any = [];
+  listeMoMo: any = [];
+  boolList: boolean = true;
+  modePaiement: string = 'Airtime';
 
   // SUSCRIPTION
   subscriptionSuccesA: Subscription;
+  subscriptionListA: Subscription;
+  // subscriptionListM: Subscription;
 
-  constructor(private statistiqueService: StatistiqueService) {}
+  constructor(
+    private statistiqueService: StatistiqueService,
+    private historyService: HistoryService,
+    private utilisService: UtilisService
+  ) {}
   ngOnInit(): void {
+    this.totalPage = 0;
     this.chiffreAffaire = 0;
     this.chiffreAffaireBac = 500000;
     this.nbrFund = 300;
     this.initDataLocalStorage();
     this.refreshData();
+    this.getAllTransactionA({ pagination: true, page: 0, size: 5 });
     this.statuts = [{ name: 'Payé' }, { name: 'Rome' }];
   }
 
   ngOnDestroy(): void {
     this.subscriptionSuccesA.unsubscribe();
+    this.subscriptionListA.unsubscribe();
+    // this.subscriptionListM.unsubscribe();
   }
 
   //FILTRER PAR ID TRANSAC
@@ -41,6 +60,12 @@ export class HistoryComponent implements OnInit {
 
   // Initialisation du localStorage
   initDataLocalStorage() {
+    localStorage.getItem('transairtime');
+    localStorage.getItem('transmomo');
+    let obj = {};
+    localStorage.setItem('transairtime', JSON.stringify(obj));
+    localStorage.setItem('transmomo', JSON.stringify(obj));
+
     if (!localStorage.getItem('lastCAData')) {
       let obj = {
         value: '',
@@ -150,4 +175,152 @@ export class HistoryComponent implements OnInit {
   padZero(value: number, length: number = 2): string {
     return value.toString().padStart(length, '0');
   }
+
+  gerePage(value: any) {
+    // this.getAllTransactionA(value);
+    if (this.boolList) {
+      this.getAllTransactionA(value);
+    } else {
+      this.getAllTransactionM(value);
+    }
+  }
+
+  gereToogle(value: any) {
+    let obj = { pagination: true, page: 0, size: 5 };
+    this.boolList = value;
+    console.log(this.boolList);
+
+    if (this.boolList) {
+      this.transactions = [];
+      this.totalPage = 0;
+      this.getAllTransactionA(obj);
+    } else {
+      this.transactions = [];
+      this.totalPage = 0;
+      this.getAllTransactionM(obj);
+    }
+
+    //  this.boolList?this.getAllTransactionA(obj):this.getAllTransactionM(obj)
+
+    this.boolList
+      ? (this.modePaiement = 'Airtime')
+      : (this.modePaiement = 'MoMo');
+  }
+
+  getAllTransactionA(obj: any) {
+    // this.boolList?this.modePaiement== 'Airtime':this.modePaiement='MoMo'
+    this.subscriptionListA = this.historyService
+      .getAlltransactionAirtime(obj)
+      .subscribe({
+        next: (value) => {
+          this.utilisService.response(value, (d: any) => {
+            console.log(d);
+            this.listeAirtime = d.content;
+            console.log('data', this.listeAirtime);
+            this.transactions = this.formateExam(this.formateStatu(d.content));
+            this.totalPage = d.totalElements;
+            console.log('je suis les données de airtime');
+          });
+        },
+      });
+  }
+
+  getAllTransactionM(obj: any) {
+    // this.boolList?this.modePaiement== 'Airtime':this.modePaiement='MoMo'
+    this.subscriptionListA = this.historyService
+      .getAlltransactionMoMo(obj)
+      .subscribe({
+        next: (value) => {
+          this.utilisService.response(value, (d: any) => {
+            console.log(d);
+            this.listeMoMo = d.content;
+            console.log('dataMomo', this.listeMoMo);
+            this.transactions = this.formateExam(this.formateStatu(d.content));
+            this.totalPage = d.totalElements;
+            console.log('je suis les données de momo');
+          });
+        },
+      });
+  }
+
+  // Formatage des different type de statu recuperer par l'API
+  formateStatu(obj: []) {
+    let e: any;
+    for (e of obj) {
+      switch (e.status) {
+        case 'Subscriber has insufficient balance':
+          console.log('fg', e.status);
+          e.status = 'Echoué';
+          break;
+        case 'Problem with getting account details.':
+          console.log('fg', e.status);
+          e.status = 'Echoué';
+          break;
+        case 'Success':
+          console.log('fg', e.status);
+          e.status = 'Payé';
+          break;
+        case 'Pending':
+          console.log('fg', e.status);
+          e.status = 'En attente';
+          break;
+        case 'SUCCESSFUL':
+          console.log('fg', e.status);
+          e.status = 'Payé';
+          break;
+        case 'PENDING':
+          console.log('fg', e.status);
+          e.status = 'En attente';
+          break;
+        case 'FAILED':
+          console.log('fg', e.status);
+          e.status = 'Echoué';
+          break;
+        case e.status:
+          console.log('fg', e.status);
+          e.status = 'Echoué';
+          break;
+        default:
+          break;
+      }
+
+    }
+    return obj;
+  }
+
+    // Formatage des different type de statu recuperer par l'API
+    formateExam(obj: []) {
+      let e: any;
+      for (e of obj) {
+        switch (e.action) {
+          case 'get_Result_Request_BACG':
+            console.log('gf', e.action);
+            e.action = 'BACG';
+            break;
+          case 'get_Center_Request_BACG':
+            console.log('gf', e.action);
+            e.action = 'BACG';
+            break;
+          case 'get_Result_Request_BEPC':
+            console.log('gf', e.action);
+            e.action = 'BEPC';
+            break;
+          case 'get_Center_Request_BEPC':
+            console.log('gf', e.action);
+            e.action = 'BEPC';
+            break;
+          case 'get_Result_Request_CEPE':
+            console.log('gf', e.action);
+            e.action = 'CEPE';
+            break;
+          case 'get_Center_Request_CEPE':
+            console.log('gf', e.action);
+            e.action = 'CEPE';
+            break;
+          default:
+            break;
+        }
+      }
+      return obj;
+    }
 }
