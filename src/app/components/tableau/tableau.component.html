@@ -1,4 +1,5 @@
 <div class="max-w-[80%] m-auto">
+  <p>{{inputValue}}</p>
   <p-table
     [scrollable]="true"
     [tableStyle]="{ 'min-width': '75rem' }"
@@ -201,12 +202,26 @@
         </th>
         <th>
         </th>
-        <th>
+        <th  *ngIf="ModePaiement == 'Airtime'">
           <input
             pInputText
             type="text"
             placeholder="Search Phone"
             class="w-full"
+            [(ngModel)]="inputValue"
+            (input)="onInputChange()"
+           
+          />
+        </th>
+        <th  *ngIf="ModePaiement == 'MoMo'">
+          <input
+            pInputText
+            type="text"
+            placeholder="Search Phone"
+            class="w-full"
+            [(ngModel)]="inputValueM"
+            (input)="onInputChangeM()"
+           
           />
         </th>
         <th>
@@ -243,7 +258,7 @@
     <!-- BODY -->
     <ng-template pTemplate="body" let-transaction>
       <tr>
-        <td class="text-center">
+        <td class=" w-[185px]">
           {{ transaction.matricule | uppercase }}
         </td>
         <td class="" *ngIf="ModePaiement == 'Airtime'">
@@ -252,8 +267,11 @@
         <td class="" *ngIf="ModePaiement == 'MoMo'">
           {{ transaction.referenceId }}
         </td>
-        <td class="min-w-[185px]">
+        <td class="min-w-[185px]" *ngIf="ModePaiement == 'Airtime'">
           {{ transaction.msisdn | telephone }}
+        </td>
+        <td class="min-w-[185px]"  *ngIf="ModePaiement == 'MoMo'">
+          {{ transaction.payer.partyId | telephone }}
         </td>
         <td class="min-w-[260px]">
           {{ transaction.callbackDate | date : "MM/dd/yyyy HH:mm:ss" }}

@@ -16,9 +16,14 @@ import { Table } from 'primeng/table';
 })
 export class TableauComponent implements OnInit, OnChanges {
   paiementMode: string;
+  inputValue: string;
+  inputValueM: string;
   @Input() LisTransaction!: any[];
   @Input() ModePaiement!: string;
   @Output() newItemEvent = new EventEmitter();
+  @Output() filterChange = new EventEmitter<string>();
+  @Output() filterChangeM = new EventEmitter<string>();
+
 
   ngOnChanges(changes: SimpleChanges): void {
     this.paiementMode = this.ModePaiement;
@@ -43,6 +48,8 @@ export class TableauComponent implements OnInit, OnChanges {
   metaKeySelection: boolean = true;
 
   ngOnInit(): void {
+    this.inputValue=''
+    this.inputValueM=''
     this.statuses = [
       { label: 'Payé', value: 'Payé' },
       { label: 'Echoué', value: 'Echoué' },
@@ -52,6 +59,7 @@ export class TableauComponent implements OnInit, OnChanges {
     this.examens = [
       { label: 'CONCOURS', value: 'CONCOURS' },
       { label: 'BACG', value: 'BACG' },
+      { label: 'BACT', value: 'BACT' },
       { label: 'BEPC', value: 'BEPC' },
       { label: 'CEPE', value: 'CEPE' },
     ];
@@ -69,6 +77,8 @@ export class TableauComponent implements OnInit, OnChanges {
 
   clear(table: Table) {
     table.clear();
+    this.inputValue = '';
+    this.inputValueM = ''
   }
 
   // DONNE LA COULEUR DU TAG EN FOCTION DE L'EXAMEN
@@ -85,6 +95,8 @@ export class TableauComponent implements OnInit, OnChanges {
 
       case 'cepe':
         return 'warning';
+      case 'bact':
+        return 'primary';
       default:
         return null;
     }
@@ -109,9 +121,18 @@ export class TableauComponent implements OnInit, OnChanges {
   handleChange(e) {
     let isChecked = e.checked;
     this.addNewItem(isChecked);
+   this.inputValue = ''
+   this.inputValueM = ''
   }
 
   addNewItem(value: boolean) {
     this.newItemEvent.emit(value);
+  }
+
+  onInputChange() {
+    this.filterChange.emit(this.inputValue);
+  }
+  onInputChangeM() {
+    this.filterChangeM.emit(this.inputValueM);
   }
 }

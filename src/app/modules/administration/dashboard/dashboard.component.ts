@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   initDataLocalStorage() {
     localStorage.setItem('tabData', JSON.stringify(this.tabDat));
     if (!localStorage.getItem('lastCAData')) {
-      let obj = {
+      let obj = { 
         value: '',
         lastDate: '',
       };

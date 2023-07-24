@@ -57,7 +57,9 @@
 
   <!-- TABLEAU -->
  <div class="w-full">
-  <app-tableau [LisTransaction]="transactions" [ModePaiement]="modePaiement" (newItemEvent)="gereToogle($event)" class="mt-4" ></app-tableau>
+  <app-tableau [LisTransaction]="transactions" (filterChange)="onFilterChange($event)" (filterChangeM)="onFilterChange($event)" [ModePaiement]="modePaiement" (newItemEvent)="gereToogle($event)" class="mt-4" ></app-tableau>
+  <!-- <app-tableau [LisTransaction]="transactions" [ModePaiement]="modePaiement" (newItemEvent)="gereToogle($event)" class="mt-4" ></app-tableau> -->
+
   <app-pagination [total]="totalPage" (newItemEvent)="gerePage($event)"></app-pagination>
  </div>
 </section>

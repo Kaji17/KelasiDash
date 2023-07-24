@@ -283,44 +283,133 @@ export class HistoryComponent implements OnInit, OnDestroy {
         default:
           break;
       }
-
     }
     return obj;
   }
 
-    // Formatage des different type de statu recuperer par l'API
-    formateExam(obj: []) {
-      let e: any;
-      for (e of obj) {
-        switch (e.action) {
-          case 'get_Result_Request_BACG':
-            console.log('gf', e.action);
-            e.action = 'BACG';
+  // Formatage des different type de statu recuperer par l'API
+  formateExam(obj: []) {
+    let e: any;
+    for (e of obj) {
+      switch (e.action) {
+        case 'get_Result_Request_BACG':
+          console.log('gf', e.action);
+          e.action = 'BACG';
+          break;
+        case 'get_Center_Request_BACG':
+          console.log('gf', e.action);
+          e.action = 'BACG';
+          break;
+        case 'get_Result_Request_BACT':
+          console.log('gf', e.action);
+          e.action = 'BACT';
+          break;
+        case 'get_Center_Request_BACT':
+          console.log('gf', e.action);
+          e.action = 'BACT';
+          break;
+
+        case 'get_Result_Request_BEPC':
+          console.log('gf', e.action);
+          e.action = 'BEPC';
+          break;
+        case 'get_Center_Request_BEPC':
+          console.log('gf', e.action);
+          e.action = 'BEPC';
+          break;
+        case 'get_Result_Request_CEPE':
+          console.log('gf', e.action);
+          e.action = 'CEPE';
+          break;
+        case 'get_Center_Request_CEPE':
+          console.log('gf', e.action);
+          e.action = 'CEPE';
+          break;
+        default:
+          break;
+      }
+    }
+    return obj;
+  }
+
+  // Filtrage de la liste en fonction du numéro
+  onFilterChange(filterValue: string) {
+    let totalList: [];
+    let totalItems: number;
+    let obj = { pagination: false, msisdn: filterValue };
+
+    switch (this.boolList) {
+      // Vérifie si on est sur la page airtime
+      case true:
+        let longeur1 = filterValue.length;
+        switch (longeur1) {
+          case 0:
+            console.log('Actualiser la liste normale');
+            this.getAllTransactionA({ pagination: true, page: 0, size: 5 });
             break;
-          case 'get_Center_Request_BACG':
-            console.log('gf', e.action);
-            e.action = 'BACG';
-            break;
-          case 'get_Result_Request_BEPC':
-            console.log('gf', e.action);
-            e.action = 'BEPC';
-            break;
-          case 'get_Center_Request_BEPC':
-            console.log('gf', e.action);
-            e.action = 'BEPC';
-            break;
-          case 'get_Result_Request_CEPE':
-            console.log('gf', e.action);
-            e.action = 'CEPE';
-            break;
-          case 'get_Center_Request_CEPE':
-            console.log('gf', e.action);
-            e.action = 'CEPE';
-            break;
-          default:
+          case 12:
+            this.subscriptionListA = this.historyService
+              .getAlltransactionAirtime(obj)
+              .subscribe({
+                next: (value) => {
+                  this.utilisService.response(value, (d: any) => {
+                    console.log(d);
+                    this.listeMoMo = d;
+                    console.log('data', this.listeMoMo);
+                    totalList = this.formateExam(this.formateStatu(d));
+                    totalItems = totalList.length;
+                    if (totalItems > 0) {
+                      this.transactions = totalList;
+                      this.totalPage = totalItems;
+                      console.log('good djob', totalItems);
+                      console.log('je suis les données de airtime');
+                    }
+                    console.log('je suis les données de airtime');
+                  });
+                },
+              });
+
+            console.log('here we go filter airtime by input');
             break;
         }
-      }
-      return obj;
+        break;
+      default:
+        break;
+
+      // Vérifie si on est sur la page airtime
+      case false:
+        let longeur = filterValue.length;
+        switch (longeur) {
+          case 0:
+            console.log('Actualiser la liste normale');
+            this.getAllTransactionM({ pagination: true, page: 0, size: 5 });
+            break;
+          case 12:
+            this.subscriptionListA = this.historyService
+              .getAlltransactionMoMo(obj)
+              .subscribe({
+                next: (value) => {
+                  this.utilisService.response(value, (d: any) => {
+                    console.log(d);
+                    this.listeMoMo = d;
+                    console.log('data', this.listeMoMo);
+                    totalList = this.formateExam(this.formateStatu(d));
+                    totalItems = totalList.length;
+                    if (totalItems > 0) {
+                      this.transactions = totalList;
+                      this.totalPage = totalItems;
+                      console.log('good djob', totalItems);
+                      console.log('je suis les données de airtime');
+                    }
+                    console.log('je suis les données de airtime');
+                  });
+                },
+              });
+
+            console.log('here we go filter airtime by input');
+            break;
+        }
+        break;
     }
+  }
 }

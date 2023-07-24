@@ -1,6 +1,6 @@
 {
     "HOST_API-DEV": "https://kyrmann-gs.com:9508/kelasi-statistique/v1/",
-    "HOST:API": "https://kms02.net:",
+    "HOST:API": "https://mtnkelasi.com/",
     "API_ENDPOINTS":{
 
       "comment": "------------ OPERATIONS ADMIN ---------------",
