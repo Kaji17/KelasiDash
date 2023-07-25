@@ -98,6 +98,54 @@ export class HistoryComponent implements OnInit, OnDestroy {
       });
   }
 
+  // Recupere la liste des transaction par MoMo
+  getAllTransactionM(obj: any) {
+    this.subscriptionListA = this.historyService
+      .getAlltransactionMoMo(obj)
+      .subscribe({
+        next: (value) => {
+          this.utilisService.response(value, (d: any) => {
+            console.log(d.content);
+            this.listeMoMo = d.content;
+            console.log('data', this.listeMoMo);
+            if (d.totalElements > 0) {
+              this.transactions = this.formateExam(
+                this.formateStatu(d.content)
+              );
+              this.totalPage = d.totalElements;
+              console.log('good djob', d.totalElements);
+              console.log('je suis les données de airtime');
+            }
+            console.log('je suis les données de airtime');
+          });
+        },
+      });
+  }
+
+  // Recupere la liste des transaction par Airtime
+  getAllTransactionA(obj: any) {
+    this.subscriptionListA = this.historyService
+      .getAlltransactionAirtime(obj)
+      .subscribe({
+        next: (value) => {
+          this.utilisService.response(value, (d: any) => {
+            console.log(d.content);
+            this.listeMoMo = d.content;
+            console.log('data', this.listeMoMo);
+            if (d.totalElements > 0) {
+              this.transactions = this.formateExam(
+                this.formateStatu(d.content)
+              );
+              this.totalPage = d.totalElements;
+              console.log('good djob', d.totalElements);
+              console.log('je suis les données de airtime');
+            }
+            console.log('je suis les données de airtime');
+          });
+        },
+      });
+  }
+
   // Récuperer les données grace au localStorage pour réduire le temps de chargement
   refreshData() {
     // Check la dernière valeur du chiffre d'affaire dans le localStorage
