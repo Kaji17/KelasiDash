@@ -1,5 +1,5 @@
 <div class="max-w-[80%] m-auto">
-  <p>{{inputValue}}</p>
+  <p>{{inputValueCanalA}}</p>
   <p-table
     [scrollable]="true"
     [tableStyle]="{ 'min-width': '75rem' }"
@@ -193,12 +193,6 @@
       <!-- HEADER POUR LES INPUT RECHERCHE -->
       <tr>
         <th>
-          <input
-            pInputText
-            type="text"
-            placeholder="Search Mat..."
-            class="w-full"
-          />
         </th>
         <th>
         </th>
@@ -234,12 +228,24 @@
             class="w-full"
           />
         </th>
-        <th>
+        <th  *ngIf="ModePaiement == 'Airtime'">
           <input
             pInputText
             type="text"
             placeholder="Search Plat.."
             class="w-full"
+            [(ngModel)]="inputValueCanalA"
+            (input)="onInputChangeCanalA()"
+          />
+        </th>
+        <th *ngIf="ModePaiement == 'MoMo'">
+          <input
+            pInputText
+            type="text"
+            placeholder="Search Plat.."
+            class="w-full"
+            [(ngModel)]="inputValueCanalA"
+            (input)="onInputChangeCanalM()"
           />
         </th>
         <th>

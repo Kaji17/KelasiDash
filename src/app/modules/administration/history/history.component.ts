@@ -420,4 +420,140 @@ export class HistoryComponent implements OnInit, OnDestroy {
         break;
     }
   }
+
+  // Filtrage de la liste en fonction de la plateforme de souscription
+  onFilterChangeP(filterValue: string) {
+    let totalList: [];
+    let totalItems: number;
+    let obj = { pagination: false, canal: filterValue };
+
+    switch (this.boolList) {
+      // Vérifie si on est sur la page airtime
+      case true:
+        let longeur1 = filterValue.length;
+        switch (filterValue) {
+          case '':
+            console.log('Actualiser la liste normale');
+            this.getAllTransactionA({ pagination: true, page: 0, size: 5 });
+            break;
+          case 'appmobile':
+            this.subscriptionListA = this.historyService
+              .getAlltransactionAirtime(obj)
+              .subscribe({
+                next: (value) => {
+                  this.utilisService.response(value, (d: any) => {
+                    console.log(d);
+                    this.listeMoMo = d;
+                    console.log('data', this.listeMoMo);
+                    totalList = this.formateExam(this.formateStatu(d));
+                    totalItems = totalList.length;
+                    if (totalItems > 0) {
+                      this.transactions = totalList;
+                      this.totalPage = totalItems;
+                      console.log('good djob', totalItems);
+                      console.log(
+                        'je suis les données de airtime apres filtrage par appmobile'
+                      );
+                    }
+                    console.log('je suis les données de airtime');
+                  });
+                },
+              });
+
+            console.log('here we go filter airtime by input');
+            break;
+          case 'ussd':
+            this.subscriptionListA = this.historyService
+              .getAlltransactionAirtime(obj)
+              .subscribe({
+                next: (value) => {
+                  this.utilisService.response(value, (d: any) => {
+                    console.log(d);
+                    this.listeMoMo = d;
+                    console.log('data', this.listeMoMo);
+                    totalList = this.formateExam(this.formateStatu(d));
+                    totalItems = totalList.length;
+                    if (totalItems > 0) {
+                      this.transactions = totalList;
+                      this.totalPage = totalItems;
+                      console.log('good djob', totalItems);
+                      console.log(
+                        'je suis les données de airtime apres filtrage par ussd'
+                      );
+                    }
+                    console.log('je suis les données de airtime');
+                  });
+                },
+              });
+
+            console.log('here we go filter airtime by input');
+            break;
+          default:
+            break;
+        }
+        break;
+      // Vérifie si on est sur la page airtime
+      case false:
+        let longeur = filterValue.length;
+        switch (filterValue) {
+          case '':
+            console.log('Actualiser la liste normale');
+            this.getAllTransactionM({ pagination: true, page: 0, size: 5 });
+            break;
+          case 'appmobile':
+            this.subscriptionListA = this.historyService
+              .getAlltransactionMoMo(obj)
+              .subscribe({
+                next: (value) => {
+                  this.utilisService.response(value, (d: any) => {
+                    console.log(d);
+                    this.listeMoMo = d;
+                    console.log('data', this.listeMoMo);
+                    totalList = this.formateExam(this.formateStatu(d));
+                    totalItems = totalList.length;
+                    if (totalItems > 0) {
+                      this.transactions = totalList;
+                      this.totalPage = totalItems;
+                      console.log('good djob', totalItems);
+                      console.log(
+                        'je suis les données de momo apres filtrage par appmobile'
+                      );
+                    }
+                    console.log('je suis les données de momo');
+                  });
+                },
+              });
+
+            console.log('here we go filter momo by input');
+            break;
+          case 'ussd':
+            this.subscriptionListA = this.historyService
+              .getAlltransactionMoMo(obj)
+              .subscribe({
+                next: (value) => {
+                  this.utilisService.response(value, (d: any) => {
+                    console.log(d);
+                    this.listeMoMo = d;
+                    console.log('data', this.listeMoMo);
+                    totalList = this.formateExam(this.formateStatu(d));
+                    totalItems = totalList.length;
+                    if (totalItems > 0) {
+                      this.transactions = totalList;
+                      this.totalPage = totalItems;
+                      console.log('good djob', totalItems);
+                      console.log(
+                        'je suis les données de momo apres filtrage par ussd'
+                      );
+                    }
+                    console.log('je suis les données de momo');
+                  });
+                },
+              });
+
+            console.log('here we go filter momo by input');
+            break;
+        }
+        break;
+    }
+  }
 }

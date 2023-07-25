@@ -18,12 +18,15 @@ export class TableauComponent implements OnInit, OnChanges {
   paiementMode: string;
   inputValue: string;
   inputValueM: string;
+  inputValueCanalA: string;
+  inputValueCanalM: string;
   @Input() LisTransaction!: any[];
   @Input() ModePaiement!: string;
   @Output() newItemEvent = new EventEmitter();
   @Output() filterChange = new EventEmitter<string>();
   @Output() filterChangeM = new EventEmitter<string>();
-
+  @Output() filterChangeCanalA = new EventEmitter<string>();
+  @Output() filterChangeCanalM = new EventEmitter<string>();
 
   ngOnChanges(changes: SimpleChanges): void {
     this.paiementMode = this.ModePaiement;
@@ -48,8 +51,10 @@ export class TableauComponent implements OnInit, OnChanges {
   metaKeySelection: boolean = true;
 
   ngOnInit(): void {
-    this.inputValue=''
-    this.inputValueM=''
+    this.inputValue = '';
+    this.inputValueM = '';
+    this.inputValueCanalA = '';
+    this.inputValueCanalM = '';
     this.statuses = [
       { label: 'Payé', value: 'Payé' },
       { label: 'Echoué', value: 'Echoué' },
@@ -78,7 +83,9 @@ export class TableauComponent implements OnInit, OnChanges {
   clear(table: Table) {
     table.clear();
     this.inputValue = '';
-    this.inputValueM = ''
+    this.inputValueM = '';
+    this.inputValueCanalA = '';
+    this.inputValueCanalM = '';
   }
 
   // DONNE LA COULEUR DU TAG EN FOCTION DE L'EXAMEN
@@ -121,18 +128,31 @@ export class TableauComponent implements OnInit, OnChanges {
   handleChange(e) {
     let isChecked = e.checked;
     this.addNewItem(isChecked);
-   this.inputValue = ''
-   this.inputValueM = ''
+    this.inputValue = '';
+    this.inputValueM = '';
+    this.inputValueCanalA = '';
+    this.inputValueCanalM = '';
   }
 
   addNewItem(value: boolean) {
     this.newItemEvent.emit(value);
   }
 
+  // search by numéro liste airtime
   onInputChange() {
     this.filterChange.emit(this.inputValue);
   }
+  // search by numéro liste momo
   onInputChangeM() {
     this.filterChangeM.emit(this.inputValueM);
+  }
+  // search by canal liste airtime
+  onInputChangeCanalA() {
+    this.filterChangeCanalA.emit(this.inputValueCanalA);
+  }
+
+  // search by canal liste airtime
+  onInputChangeCanalM() {
+    this.filterChangeCanalM.emit(this.inputValueCanalM);
   }
 }
