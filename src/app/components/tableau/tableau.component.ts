@@ -98,7 +98,7 @@ export class TableauComponent implements OnInit, OnChanges {
       case 'bact':
         return 'primary';
       default:
-        return null;
+        return 'secondary';
     }
   }
 

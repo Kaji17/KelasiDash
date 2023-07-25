@@ -325,6 +325,14 @@ export class HistoryComponent implements OnInit, OnDestroy {
           console.log('gf', e.action);
           e.action = 'CEPE';
           break;
+          case 'get_Result_Request_CONCOURS':
+          console.log('gf', e.action);
+          e.action = 'CONCOURS';
+          break;
+        case 'get_Center_Request_CONCOURS':
+          console.log('gf', e.action);
+          e.action = 'CONCOURS';
+          break;
         default:
           break;
       }
