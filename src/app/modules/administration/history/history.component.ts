@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import { HistoryService } from 'src/app/shared/services/history.service';
 import { StatistiqueService } from 'src/app/shared/services/statistique.service';
 import { UtilisService } from 'src/app/shared/services/utilis.service';
@@ -24,6 +24,8 @@ export class HistoryComponent implements OnInit, OnDestroy {
   listeMoMo: any = [];
   boolList: boolean = true;
   modePaiement: string = 'Airtime';
+  filterValueMsidn: string;
+  filterValueplateforme: string;
 
   // SUSCRIPTION
   subscriptionSuccesA: Subscription;
@@ -227,9 +229,45 @@ export class HistoryComponent implements OnInit, OnDestroy {
   gerePage(value: any) {
     // this.getAllTransactionA(value);
     if (this.boolList) {
-      this.getAllTransactionA(value);
+      // this.getAllTransactionA(value);
+      console.log('value.size',value.size)
+      if (this.totalPage > value.size) {
+        if(!this.filterValueMsidn){
+          // si le champs de recherche par plateforme est renseigné
+          if(this.filterValueplateforme.length>0){
+            value.canal = this.filterValueplateforme;
+            console.log('objet a send', value);
+            this.filtreByPlateforme(value);
+          }else{
+            this.getAllTransactionA(value)
+          }
+        }else{
+          value.msisdn = this.filterValueMsidn
+          console.log('objet a send', value);
+          this.filtreByNumber(value)
+        }
+      } else {
+        console.log('element tableu inférieur');
+      }
     } else {
-      this.getAllTransactionM(value);
+      if (this.totalPage > value.size) {
+        if(!this.filterValueMsidn){
+          // si le champs de recherche par plateforme est renseigné
+          if(this.filterValueplateforme.length>0){
+            value.canal = this.filterValueplateforme;
+            console.log('objet a send', value);
+            this.filtreByPlateforme(value);
+          }else{
+            this.getAllTransactionM(value)
+          }
+        }else{
+          value.msisdn = this.filterValueMsidn
+          console.log('objet a send', value);
+          this.filtreByNumber(value)
+        }
+      } else {
+        console.log('element tableu inférieur');
+      }
     }
   }
 
@@ -255,41 +293,6 @@ export class HistoryComponent implements OnInit, OnDestroy {
       : (this.modePaiement = 'MoMo');
   }
 
-  getAllTransactionA(obj: any) {
-    // this.boolList?this.modePaiement== 'Airtime':this.modePaiement='MoMo'
-    this.subscriptionListA = this.historyService
-      .getAlltransactionAirtime(obj)
-      .subscribe({
-        next: (value) => {
-          this.utilisService.response(value, (d: any) => {
-            console.log(d);
-            this.listeAirtime = d.content;
-            console.log('data', this.listeAirtime);
-            this.transactions = this.formateExam(this.formateStatu(d.content));
-            this.totalPage = d.totalElements;
-            console.log('je suis les données de airtime');
-          });
-        },
-      });
-  }
-
-  getAllTransactionM(obj: any) {
-    // this.boolList?this.modePaiement== 'Airtime':this.modePaiement='MoMo'
-    this.subscriptionListA = this.historyService
-      .getAlltransactionMoMo(obj)
-      .subscribe({
-        next: (value) => {
-          this.utilisService.response(value, (d: any) => {
-            console.log(d);
-            this.listeMoMo = d.content;
-            console.log('dataMomo', this.listeMoMo);
-            this.transactions = this.formateExam(this.formateStatu(d.content));
-            this.totalPage = d.totalElements;
-            console.log('je suis les données de momo');
-          });
-        },
-      });
-  }
 
   // Formatage des different type de statu recuperer par l'API
   formateStatu(obj: []) {
@@ -297,35 +300,27 @@ export class HistoryComponent implements OnInit, OnDestroy {
     for (e of obj) {
       switch (e.status) {
         case 'Subscriber has insufficient balance':
-          console.log('fg', e.status);
           e.status = 'Echoué';
           break;
         case 'Problem with getting account details.':
-          console.log('fg', e.status);
           e.status = 'Echoué';
           break;
         case 'Success':
-          console.log('fg', e.status);
           e.status = 'Payé';
           break;
         case 'Pending':
-          console.log('fg', e.status);
           e.status = 'En attente';
           break;
         case 'SUCCESSFUL':
-          console.log('fg', e.status);
           e.status = 'Payé';
           break;
         case 'PENDING':
-          console.log('fg', e.status);
           e.status = 'En attente';
           break;
         case 'FAILED':
-          console.log('fg', e.status);
           e.status = 'Echoué';
           break;
         case e.status:
-          console.log('fg', e.status);
           e.status = 'Echoué';
           break;
         default:
@@ -341,90 +336,72 @@ export class HistoryComponent implements OnInit, OnDestroy {
     for (e of obj) {
       switch (e.action) {
         case 'get_Result_Request_BACG':
-          console.log('gf', e.action);
           e.action = 'BACG';
           break;
         case 'get_Center_Request_BACG':
-          console.log('gf', e.action);
           e.action = 'BACG';
           break;
         case 'get_Result_Request_BACT':
-          console.log('gf', e.action);
           e.action = 'BACT';
           break;
         case 'get_Center_Request_BACT':
-          console.log('gf', e.action);
           e.action = 'BACT';
           break;
 
         case 'get_Result_Request_BEPC':
-          console.log('gf', e.action);
           e.action = 'BEPC';
           break;
         case 'get_Center_Request_BEPC':
-          console.log('gf', e.action);
           e.action = 'BEPC';
           break;
         case 'get_Result_Request_CEPE':
-          console.log('gf', e.action);
           e.action = 'CEPE';
           break;
         case 'get_Center_Request_CEPE':
-          console.log('gf', e.action);
           e.action = 'CEPE';
           break;
-          case 'get_Result_Request_CONCOURS':
-          console.log('gf', e.action);
+        case 'get_Result_Request_CONCOURS':
           e.action = 'CONCOURS';
           break;
         case 'get_Center_Request_CONCOURS':
-          console.log('gf', e.action);
           e.action = 'CONCOURS';
           break;
         default:
+          e.action = 'TEST';
           break;
       }
     }
     return obj;
   }
 
-  // Filtrage de la liste en fonction du numéro
+  // Transmission des valeur du input bidirectionnel
   onFilterChange(filterValue: string) {
-    let totalList: [];
-    let totalItems: number;
-    let obj = { pagination: false, msisdn: filterValue };
+    this.filterValueMsidn = filterValue;
+    let obj = { pagination: true, msisdn: filterValue, page: 0, size: 5 };
+    this.filtreByNumber(obj);
+  }
 
+  // Filtrage de la liste en fonction de la plateforme de souscription
+  onFilterChangeP(filterValue: string) {
+    this.filterValueplateforme = filterValue;
+    let obj = { pagination: true, canal: filterValue, page: 0, size: 5 };
+    this.filtreByPlateforme(obj);
+  }
+
+  // Filtrage de la liste en fonction du numéro
+  filtreByNumber(obj: any) {
     switch (this.boolList) {
       // Vérifie si on est sur la page airtime
       case true:
-        let longeur1 = filterValue.length;
+        let longeur1 = this.filterValueMsidn.length;
         switch (longeur1) {
           case 0:
             console.log('Actualiser la liste normale');
             this.getAllTransactionA({ pagination: true, page: 0, size: 5 });
             break;
           case 12:
-            this.subscriptionListA = this.historyService
-              .getAlltransactionAirtime(obj)
-              .subscribe({
-                next: (value) => {
-                  this.utilisService.response(value, (d: any) => {
-                    console.log(d);
-                    this.listeMoMo = d;
-                    console.log('data', this.listeMoMo);
-                    totalList = this.formateExam(this.formateStatu(d));
-                    totalItems = totalList.length;
-                    if (totalItems > 0) {
-                      this.transactions = totalList;
-                      this.totalPage = totalItems;
-                      console.log('good djob', totalItems);
-                      console.log('je suis les données de airtime');
-                    }
-                    console.log('je suis les données de airtime');
-                  });
-                },
-              });
-
+            console.log('obkj', obj);
+            this.getAllTransactionA(obj);
             console.log('here we go filter airtime by input');
             break;
         }
@@ -434,34 +411,16 @@ export class HistoryComponent implements OnInit, OnDestroy {
 
       // Vérifie si on est sur la page airtime
       case false:
-        let longeur = filterValue.length;
+        let longeur = this.filterValueMsidn.length;
         switch (longeur) {
           case 0:
             console.log('Actualiser la liste normale');
             this.getAllTransactionM({ pagination: true, page: 0, size: 5 });
             break;
           case 12:
-            this.subscriptionListA = this.historyService
-              .getAlltransactionMoMo(obj)
-              .subscribe({
-                next: (value) => {
-                  this.utilisService.response(value, (d: any) => {
-                    console.log(d);
-                    this.listeMoMo = d;
-                    console.log('data', this.listeMoMo);
-                    totalList = this.formateExam(this.formateStatu(d));
-                    totalItems = totalList.length;
-                    if (totalItems > 0) {
-                      this.transactions = totalList;
-                      this.totalPage = totalItems;
-                      console.log('good djob', totalItems);
-                      console.log('je suis les données de airtime');
-                    }
-                    console.log('je suis les données de airtime');
-                  });
-                },
-              });
+            this.getAllTransactionM(obj);
 
+            // this.getTableFilter(filterValue, totalList,totalItems,obj)
             console.log('here we go filter airtime by input');
             break;
         }
@@ -469,71 +428,22 @@ export class HistoryComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Filtrage de la liste en fonction de la plateforme de souscription
-  onFilterChangeP(filterValue: string) {
-    let totalList: [];
-    let totalItems: number;
-    let obj = { pagination: false, canal: filterValue };
-
+  // Filtrage de la liste en fonction de la plateforme
+  filtreByPlateforme(obj: any) {
     switch (this.boolList) {
       // Vérifie si on est sur la page airtime
       case true:
-        let longeur1 = filterValue.length;
-        switch (filterValue) {
+        switch (this.filterValueplateforme) {
           case '':
             console.log('Actualiser la liste normale');
             this.getAllTransactionA({ pagination: true, page: 0, size: 5 });
             break;
           case 'appmobile':
-            this.subscriptionListA = this.historyService
-              .getAlltransactionAirtime(obj)
-              .subscribe({
-                next: (value) => {
-                  this.utilisService.response(value, (d: any) => {
-                    console.log(d);
-                    this.listeMoMo = d;
-                    console.log('data', this.listeMoMo);
-                    totalList = this.formateExam(this.formateStatu(d));
-                    totalItems = totalList.length;
-                    if (totalItems > 0) {
-                      this.transactions = totalList;
-                      this.totalPage = totalItems;
-                      console.log('good djob', totalItems);
-                      console.log(
-                        'je suis les données de airtime apres filtrage par appmobile'
-                      );
-                    }
-                    console.log('je suis les données de airtime');
-                  });
-                },
-              });
-
+            this.getAllTransactionA(obj);
             console.log('here we go filter airtime by input');
             break;
           case 'ussd':
-            this.subscriptionListA = this.historyService
-              .getAlltransactionAirtime(obj)
-              .subscribe({
-                next: (value) => {
-                  this.utilisService.response(value, (d: any) => {
-                    console.log(d);
-                    this.listeMoMo = d;
-                    console.log('data', this.listeMoMo);
-                    totalList = this.formateExam(this.formateStatu(d));
-                    totalItems = totalList.length;
-                    if (totalItems > 0) {
-                      this.transactions = totalList;
-                      this.totalPage = totalItems;
-                      console.log('good djob', totalItems);
-                      console.log(
-                        'je suis les données de airtime apres filtrage par ussd'
-                      );
-                    }
-                    console.log('je suis les données de airtime');
-                  });
-                },
-              });
-
+            this.getAllTransactionA(obj);
             console.log('here we go filter airtime by input');
             break;
           default:
@@ -542,62 +452,17 @@ export class HistoryComponent implements OnInit, OnDestroy {
         break;
       // Vérifie si on est sur la page airtime
       case false:
-        let longeur = filterValue.length;
-        switch (filterValue) {
+        switch (this.filterValueplateforme) {
           case '':
             console.log('Actualiser la liste normale');
             this.getAllTransactionM({ pagination: true, page: 0, size: 5 });
             break;
           case 'appmobile':
-            this.subscriptionListA = this.historyService
-              .getAlltransactionMoMo(obj)
-              .subscribe({
-                next: (value) => {
-                  this.utilisService.response(value, (d: any) => {
-                    console.log(d);
-                    this.listeMoMo = d;
-                    console.log('data', this.listeMoMo);
-                    totalList = this.formateExam(this.formateStatu(d));
-                    totalItems = totalList.length;
-                    if (totalItems > 0) {
-                      this.transactions = totalList;
-                      this.totalPage = totalItems;
-                      console.log('good djob', totalItems);
-                      console.log(
-                        'je suis les données de momo apres filtrage par appmobile'
-                      );
-                    }
-                    console.log('je suis les données de momo');
-                  });
-                },
-              });
-
+            this.getAllTransactionM(obj);
             console.log('here we go filter momo by input');
             break;
           case 'ussd':
-            this.subscriptionListA = this.historyService
-              .getAlltransactionMoMo(obj)
-              .subscribe({
-                next: (value) => {
-                  this.utilisService.response(value, (d: any) => {
-                    console.log(d);
-                    this.listeMoMo = d;
-                    console.log('data', this.listeMoMo);
-                    totalList = this.formateExam(this.formateStatu(d));
-                    totalItems = totalList.length;
-                    if (totalItems > 0) {
-                      this.transactions = totalList;
-                      this.totalPage = totalItems;
-                      console.log('good djob', totalItems);
-                      console.log(
-                        'je suis les données de momo apres filtrage par ussd'
-                      );
-                    }
-                    console.log('je suis les données de momo');
-                  });
-                },
-              });
-
+            this.getAllTransactionM(obj);
             console.log('here we go filter momo by input');
             break;
         }

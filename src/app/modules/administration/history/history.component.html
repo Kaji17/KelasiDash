@@ -1,62 +1,79 @@
-
 <div class="at-item">
-<!-- TITLE -->
-<div class="text-center">
-  <h1 class="text-[#07506A] text-[26px] mt-9">Historique des transactions</h1>
-  <h2 class="text-[#8E98A8] text-[18px]">
-    Garder le contrôle sur l’ensemble des transactions effectuées sur la
-    plateforme
-  </h2>
-</div>
-
-<!-- PREMIER BLOCK BLANC  -->
-<section class="flex justify-center">
-  <div
-    class="w-[80%] h-[200px] bg-[#FFFFFF] rounded-lg drop-shadow-md mt-9 px-8 py-3 flex justify-evenly max-md:h-[21vh]"
-    style="flex-direction: column"
-  >
-    <h2 class="text-[#07506A] text-[19px]">
-      <strong>Chiffre d'affaire: </strong><span>{{ chiffreAffaire | number}} FCFA</span>
+  <!-- TITLE -->
+  <div class="text-center">
+    <h1 class="text-[#07506A] text-[26px] mt-9">Historique des transactions</h1>
+    <h2 class="text-[#8E98A8] text-[18px]">
+      Garder le contrôle sur l’ensemble des transactions effectuées sur la
+      plateforme
     </h2>
-    <div class="contentLevel grid grid-cols-4 gap-2 max-md:grid-rows-4 max-md:grid-cols-1 max-md:gap-2">
-      <!-- GREEN  BAC-->
-      <div class="flex flex-col  max-md:flex-row-reverse">
-        <div class="ligneniveau h-[4px] bg-[#39A74B] w-full"></div>
-        <p class="text-[#39A74B] mt-2 max-md:min-w-fit max-md:mt-0 max-md:mx-2">{{ chiffreAffaireBac }} FCFA</p>
-        <p class="text-[#8E98A8] max-md:min-w-fit">Transaction BAC</p>
-      </div>
+  </div>
 
-      <!-- BLUE CEPE-->
-      <div class="flex flex-col  max-md:flex-row-reverse">
-        <div class="ligneniveau h-[4px] bg-[#00A9E4] w-full"></div>
-        <p class="text-[#00A9E4] mt-2 max-md:min-w-fit max-md:mt-0 max-md:mx-2">{{ chiffreAffaireBac }} FCFA</p>
-        <p class="text-[#8E98A8] max-md:min-w-fit">Transaction CEPE</p>
-      </div>
+  <!-- PREMIER BLOCK BLANC  -->
+  <section class="flex justify-center">
+    <div
+      class="w-[80%] h-[200px] bg-[#FFFFFF] rounded-lg drop-shadow-md mt-9 px-8 py-3 flex justify-evenly max-md:h-[21vh]"
+      style="flex-direction: column"
+    >
+      <h2 class="text-[#07506A] text-[19px]">
+        <strong>Chiffre d'affaire: </strong
+        ><span>{{ chiffreAffaire | number }} FCFA</span>
+      </h2>
+      <div
+        class="contentLevel grid grid-cols-4 gap-2 max-md:grid-rows-4 max-md:grid-cols-1 max-md:gap-2"
+      >
+        <!-- GREEN  BAC-->
+        <div class="flex flex-col max-md:flex-row-reverse">
+          <div class="ligneniveau h-[4px] bg-[#39A74B] w-full"></div>
+          <p
+            class="text-[#39A74B] mt-2 max-md:min-w-fit max-md:mt-0 max-md:mx-2"
+          >
+            {{ chiffreAffaireBac }} FCFA
+          </p>
+          <p class="text-[#8E98A8] max-md:min-w-fit">Transaction BAC</p>
+        </div>
 
-      <!-- RED BEPC-->
-      <div class="flex flex-col  max-md:flex-row-reverse">
-        <div class="ligneniveau h-[4px] bg-[#EE6060] w-full"></div>
-        <p class="text-[#EE6060] mt-2 max-md:min-w-fit max-md:mt-0 max-md:mx-2">{{ chiffreAffaireBac }} FCFA</p>
-        <p class="text-[#8E98A8] max-md:min-w-fit">Transaction BEPC</p>
-      </div>
+        <!-- BLUE CEPE-->
+        <div class="flex flex-col max-md:flex-row-reverse">
+          <div class="ligneniveau h-[4px] bg-[#00A9E4] w-full"></div>
+          <p
+            class="text-[#00A9E4] mt-2 max-md:min-w-fit max-md:mt-0 max-md:mx-2"
+          >
+            {{ chiffreAffaireBac }} FCFA
+          </p>
+          <p class="text-[#8E98A8] max-md:min-w-fit">Transaction CEPE</p>
+        </div>
 
-      <!-- YELLOW CONCOURS-->
-      <div class="flex flex-col  max-md:flex-row-reverse">
-        <div class="ligneniveau h-[4px] bg-[#FFDC0E] w-full"></div>
-        <p class="text-[#FFDC0E] mt-2 max-md:min-w-fit max-md:mt-0 max-md:mx-2">{{ chiffreAffaireBac }} FCFA</p>
-        <p class="text-[#8E98A8] max-md:min-w-fit">Transaction CONCOURS</p>
+        <!-- RED BEPC-->
+        <div class="flex flex-col max-md:flex-row-reverse">
+          <div class="ligneniveau h-[4px] bg-[#EE6060] w-full"></div>
+          <p
+            class="text-[#EE6060] mt-2 max-md:min-w-fit max-md:mt-0 max-md:mx-2"
+          >
+            {{ chiffreAffaireBac }} FCFA
+          </p>
+          <p class="text-[#8E98A8] max-md:min-w-fit">Transaction BEPC</p>
+        </div>
+
+        <!-- YELLOW CONCOURS-->
+        <div class="flex flex-col max-md:flex-row-reverse">
+          <div class="ligneniveau h-[4px] bg-[#FFDC0E] w-full"></div>
+          <p
+            class="text-[#FFDC0E] mt-2 max-md:min-w-fit max-md:mt-0 max-md:mx-2"
+          >
+            {{ chiffreAffaireBac }} FCFA
+          </p>
+          <p class="text-[#8E98A8] max-md:min-w-fit">Transaction CONCOURS</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- TABLEAU TRANSACTION -->
-<section class="w-full min-h-[75vh] bg-[#FFFFFF] mt-10 flex justify-center">
-  <!-- BOUTTON DE TELECHARGEMENT -->
+  <!-- TABLEAU TRANSACTION -->
+  <section class="w-full min-h-[75vh] bg-[#FFFFFF] mt-10 flex justify-center">
+    <!-- BOUTTON DE TELECHARGEMENT -->
 
-
-  <!-- TABLEAU -->
- <div class="w-full">
+    <!-- TABLEAU -->
+    <div class="w-full">
       <app-tableau
         [LisTransaction]="transactions"
         (filterChange)="onFilterChange($event)"
@@ -69,8 +86,10 @@
       ></app-tableau>
       <!-- <app-tableau [LisTransaction]="transactions" [ModePaiement]="modePaiement" (newItemEvent)="gereToogle($event)" class="mt-4" ></app-tableau> -->
 
-  <app-pagination [total]="totalPage" (newItemEvent)="gerePage($event)"></app-pagination>
- </div>
-</section>
-
+      <app-pagination
+        [total]="totalPage"
+        (newItemEvent)="gerePage($event)"
+      ></app-pagination>
+    </div>
+  </section>
 </div>
