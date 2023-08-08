@@ -44,31 +44,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
   subscriptionSuccesM: Subscription;
   subscriptionCountSMS: Subscription;
   subscriptionTauxByDevice: Subscription;
-  subscriptionCountMoMoTaux: Subscription;
 
   constructor(private statistiqueService: StatistiqueService) {}
 
   ngOnInit(): void {
     this.initDataLocalStorage();
     this.initValue();
-    this.refreshData();
+    this.getChiffreAffaireAirtimeMoMo()
     this.getTotalTransaction();
     this.getTotalTransactionM();
     this.getTotalTransactionA();
-    this.getTauxMoMoByChannel();
-    this.getTauxUSSDByChannel();
+    this.getTauxByCannal("appmobile");
+    this.getTauxByCannal("ussd");
     this.getTabData();
   }
 
   ngOnDestroy(): void {
-    this.subscriptionATotalamount.unsubscribe();
+    // this.subscriptionATotalamount.unsubscribe();
     this.subscriptionCountMoMoSta.unsubscribe();
-    this.subscriptionSuccesM.unsubscribe();
     this.subscriptionSuccesA.unsubscribe();
     this.subscriptionCountSMS.unsubscribe();
     this.subscriptionTauxByDevice.unsubscribe();
-    this.subscriptionCountMoMoTaux.unsubscribe();
-  }
+    }
 
   // Initialisation du localStorage
   initDataLocalStorage() {
@@ -132,7 +129,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         next: (total) => {
           total1 = total;
 
-          this.subscriptionATotalamount = this.statistiqueService
+          this.statistiqueService
             .getTransactionTotal()
             .subscribe({
               next: (total) => {
@@ -168,7 +165,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       statut: 'SUCCESSFUL',
     };
 
-    this.subscriptionSuccesM = this.statistiqueService
+    this.statistiqueService
       .getTransactionTotalMomo(ca2)
       .subscribe({
         next: (total) => {
@@ -212,87 +209,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   // Récuperation du chiffre d'affaire d'Airtimes et Momo des transactions réussits
-  getChiffreAffaireAirtimeMoMo(ca?: any, ca1?: any, obj?: any) {
+  getChiffreAffaireAirtimeMoMo() {
+    let ca = {
+      statut: 'Success',
+    };
+    let ca1 = {
+      statut: 'SUCCESSFUL',
+    };
     let total1: number;
     this.subscriptionSuccesA = this.statistiqueService
       .getMontantTotal(ca)
       .subscribe({
         next: (value) => {
           total1 = value;
-          console.log('montantTottal', this.chiffreAffaire);
+          console.log('montantTottal Airtime', this.chiffreAffaire);
           this.statistiqueService.getMontantTotalMomo(ca1).subscribe({
             next: (value) => {
               this.chiffreAffaire = total1 + value;
-              console.log('montantTottal2', this.chiffreAffaire);
-
-              obj.value = this.chiffreAffaire;
-              obj.lastDate = this.formatDateTime(new Date());
-              localStorage.setItem('lastCAData', JSON.stringify(obj));
+              console.log('montantTottal', this.chiffreAffaire);
             },
           });
         },
       });
-  }
-
-  // Récuperer les données grace au localStorage pour réduire le temps de chargement
-  refreshData() {
-    // Check la dernière valeur du chiffre d'affaire dans le localStorage
-    let last = JSON.parse(localStorage.getItem('lastCAData'));
-    console.log('thonnn,', last.value);
-
-    // Si il n'y a aucune valeur faire un getAll de toute les valeurs
-    if (last.value == '') {
-      let ca = {
-        statut: 'Success',
-      };
-
-      let ca1 = {
-        statut: 'SUCCESSFUL',
-      };
-
-      let obj = {
-        value: '',
-        lastDate: '',
-      };
-      this.getChiffreAffaireAirtimeMoMo(ca, ca1, obj);
-    }
-    // Sinon recuperer le chiffre d'affaire de puis la dernière date jusqu'a  cet intant et l'additionner avec la dernière
-    else {
-      let obj: any;
-      obj = JSON.parse(localStorage.getItem('lastCAData'));
-      let ca = {
-        datedebut: this.formatDateTime(new Date(obj.lastDate)),
-        statut: 'Success',
-      };
-
-      let ca1 = {
-        datedebut: this.formatDateTime(new Date(obj.lastDate)),
-        statut: 'SUCCESSFUL',
-      };
-
-      let newChiffreAffaire: number;
-
-      let total1: number;
-      this.subscriptionSuccesA = this.statistiqueService
-        .getMontantTotal(ca)
-        .subscribe({
-          next: (value) => {
-            total1 = value;
-            console.log('mothonTottal', this.chiffreAffaire);
-            this.statistiqueService.getMontantTotalMomo(ca1).subscribe({
-              next: (value) => {
-                newChiffreAffaire = total1 + value;
-                console.log('mothon', newChiffreAffaire);
-
-                this.chiffreAffaire = obj.value + newChiffreAffaire;
-                obj.value = this.chiffreAffaire;
-                obj.lastDate = this.formatDateTime(new Date());
-                localStorage.setItem('lastCAData', JSON.stringify(obj));
-              },
-            });
-          },
-        });
-    }
   }
 
   // Recupération des données pour le diagramme circulaire
@@ -341,68 +279,60 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   // Recupération les taux d'echec et de succes a partir du canal de paiement AppMobile ou USSD
-  getTauxMoMoByChannel() {
+  getTauxByCannal(chanel: string) {
+    let total: number;
+    let totalSucces: number;
     let obj1 = {
-      canal: 'appmobile',
+      canal: chanel,
       statut: 'SUCCESSFUL',
-    };
-    this.subscriptionTauxByDevice = this.statistiqueService
-      .getAllTauxMomo(obj1)
-      .subscribe({
-        next: (value) => {
-          this.percentAppmobilS = this.formatTaux(value);
-          this.percentAppmobilE = 100 - this.percentAppmobilS;
-        },
-      });
-  }
-
-  // Recupération les taux d'echec et de succes a partir du canal de paiement AppMobile ou USSD
-  getTauxUSSDByChannel() {
-    let totalUSSD: number;
-    let totalUssdSucces: number;
-    let obj1 = {
-      canal: 'ussd',
     };
     let obj2 = {
-      canal: 'ussd',
-      statut: 'SUCCESSFUL',
+      canal: chanel,
     };
     let obj3 = {
+      canal: chanel,
       statut: 'Success',
     };
+    this.subscriptionTauxByDevice = this.statistiqueService.getTransactionTotal(obj2).subscribe({
+      next: value =>{
+        total= value
+        this.statistiqueService.getTransactionTotalMomo(obj2).subscribe({
+          next: value =>{
+            total = total+value
+            this.statistiqueService.getTransactionTotalMomo(obj1).subscribe({
+              next: value =>{
+                totalSucces = value
+                this.statistiqueService.getTransactionTotal(obj3).subscribe({
+                  next: value =>{
+                    if(chanel == "appmobile"){
+                      totalSucces = totalSucces+value
+                      this.percentAppmobilS = Math.floor(
+                        (totalSucces * 100) / total
+                      );
+                      this.percentAppmobilE = Math.floor(100 - this.percentAppmobilS);
 
-    this.subscriptionCountMoMoTaux = this.statistiqueService
-      .getTransactionTotalMomo(obj1)
-      .subscribe({
-        next: (value) => {
-          totalUSSD = value;
-          this.statistiqueService.getTransactionTotal().subscribe({
-            next: (value) => {
-              totalUSSD = totalUSSD + value;
-              console.log('Total trans  by USSD:', totalUSSD);
-              this.statistiqueService.getTransactionTotalMomo(obj2).subscribe({
-                next: (value) => {
-                  totalUssdSucces = value;
-                  this.statistiqueService.getTransactionTotal(obj3).subscribe({
-                    next: (value) => {
-                      totalUssdSucces = totalUssdSucces + value;
+                      console.log("Nombre total par Appmobile", total)
+                      console.log("percent succes par Appmobile", this.percentAppmobilS)
+                    }else{
+                      totalSucces = totalSucces+value
                       this.percentUssdS = Math.floor(
-                        (totalUssdSucces * 100) / totalUSSD
+                        (totalSucces * 100) / total
                       );
                       this.percentUssdE = Math.floor(100 - this.percentUssdS);
-                    },
-                  });
-                },
-              });
-            },
-          });
-        },
-      });
+                      console.log("Nombre total par Appmobile", total)
+                      console.log("percent succes par Appmobile", this.percentUssdS)
+                    }
+     
+                  }
+                })
+              }
+            })
+          }
+        })
+      }
+    })
   }
 
-  getDataProgressData(){
-    
-  }
   // Formatage de la date en yyyy-MM-dd HH:mm:ss.SSS
   formatDateTime(date: Date): string {
     const year = date.getFullYear();

@@ -7,11 +7,11 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class StatStatusComponent implements OnInit {
   @Input()data: any;
-  percentS: number
-  percentE: number
+  @Input()percentS: number
+  @Input()percentE: number
 
   ngOnInit(): void {
-    this.percentS = 90
-    this.percentE =10
+    // this.percentS = 0
+    // this.percentE =0
   }
 }

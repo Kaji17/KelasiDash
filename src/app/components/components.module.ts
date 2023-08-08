@@ -25,9 +25,6 @@ import { PaginatorModule } from 'primeng/paginator';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import { SharedModule } from "../shared/shared.module";
 
-
-
-
 @NgModule({
     declarations: [NavBarComponent, PaginationComponent, TableauComponent, CardResumeComponent, CardModePaiementComponent, CardMethodePaiementComponent],
     exports: [NavBarComponent, PaginationComponent, TableauComponent, CardResumeComponent, CardMethodePaiementComponent, CardModePaiementComponent],

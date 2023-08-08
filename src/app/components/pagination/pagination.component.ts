@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class PaginationComponent {
   page:number=0
-  rows:number = 5
+  rows:number = 10
   // total:number=0
   @Input() total = 0
   options:any=[

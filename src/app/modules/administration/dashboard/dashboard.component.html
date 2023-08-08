@@ -6,31 +6,6 @@
       class="bg-[#07506A] rounded-lg w-[352px] h-[273.5px] flex text-white justify-evenly max-xl:w-[60%] max-[980px]:w-full max-[505px]:w-[75%] max-[430px]:w-full"
       style="flex-direction: column"
     >
-      <!-- <div class="px-5 py-3 text-center">
-        <p-inplace
-          [closable]="true"
-          [closeIcon]="iconsverif"
-          class="inplace-class"
-        >
-          <ng-template pTemplate="display">
-            <span>Période: {{ dateDebut | date }}</span>
-          </ng-template>
-          <ng-template pTemplate="content">
-            <p-calendar
-              [(ngModel)]="dateDebut"
-              [showButtonBar]="true"
-              placeholder="date debut"
-            ></p-calendar>
-
-            <p-calendar
-              [(ngModel)]="dateDebut"
-              [showButtonBar]="true"
-              placeholder="date fin"
-            ></p-calendar>
-          </ng-template>
-        </p-inplace>
-      </div> -->
-
       <div class="px-5 max-xl:flex max-xl:justify-between">
         <p class="text-[22px]">CHIFFRE D'AFFAIRE</p>
         <span
@@ -80,7 +55,7 @@
 
     <!-- BOCK RESUME DES METHODE -->
     <div class="cardResumeStatus flex" style="flex-direction: column">
-      <h1 class="text-[25px] text-sky-900 mb-6 max-xl:text-center">Résumé des méthodes</h1>
+      <h1 class="text-[25px] text-sky-900 mb-6 max-xl:text-center">Résumé des Modes de paiement</h1>
 
       <div class="flex justify-between gap-x-4 max-[980px]:justify-evenly  max-[430px]:gap-y-3  max-[430px]:items-center">
         <!-- CARD APP MOBILE -->
@@ -93,7 +68,7 @@
 
         <!-- CARD CARD USSD -->
         <app-card-resume
-          [title]="'USSD'"
+          [title]="'Airtime'"
           [total1]="tottalTransactionAirt"
           [total2]="tottalTransaction"
           [typeCard]="'blue'"

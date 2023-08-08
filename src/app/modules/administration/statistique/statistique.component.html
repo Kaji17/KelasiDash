@@ -8,14 +8,14 @@
     <p-tabView [style]="{padding:'20px', borderRadius:'20px'}">
         <p-tabPanel header="STATUS">
             <p-menubar [model]="items"></p-menubar>
-            <div *ngIf="menuSelected==1"> <app-stat-status [data]="data"></app-stat-status> </div>
+            <div *ngIf="menuSelected==1"> <app-stat-status [data]="data" [percentE]="percentE" [percentS]="percentS"></app-stat-status> </div>
             <div *ngIf="menuSelected==2"> <app-stat-periode [data]="dataP"></app-stat-periode></div>
-            <div *ngIf="menuSelected==3"> <app-stat-mode-paiement-status></app-stat-mode-paiement-status></div>
+            <div *ngIf="menuSelected==3"> <app-stat-mode-paiement-status [dataTab]="datasetModePaiement" [dataTabAirtime]="dataTabAirtime" [dataTabMoMo]="dataTabMoMo"></app-stat-mode-paiement-status></div>
             <div *ngIf="menuSelected==4"> <app-stat-examen-status></app-stat-examen-status></div>
         </p-tabPanel>
         <p-tabPanel header="CHIFFRE D'AFFAIRE">
             <p-menubar [model]="items1"></p-menubar>
-            <div *ngIf="menuSelected==1"> <app-stat-chiffre-affaire></app-stat-chiffre-affaire></div>
+            <div *ngIf="menuSelected1==1"> <app-stat-chiffre-affaire></app-stat-chiffre-affaire></div>
 
         </p-tabPanel>
     </p-tabView>

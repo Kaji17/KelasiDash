@@ -18,6 +18,8 @@ export class TableauComponent implements OnInit, OnChanges {
   paiementMode: string;
   inputValue: string;
   inputValueM: string;
+  inputValueTransId: string;
+  inputValueTransIdM: string;
   inputValueCanalA: string;
   inputValueCanalM: string;
   @Input() LisTransaction!: any[];
@@ -27,6 +29,8 @@ export class TableauComponent implements OnInit, OnChanges {
   @Output() filterChangeM = new EventEmitter<string>();
   @Output() filterChangeCanalA = new EventEmitter<string>();
   @Output() filterChangeCanalM = new EventEmitter<string>();
+  @Output() filterChangeTransA = new EventEmitter<string>();
+  @Output() filterChangeTransM = new EventEmitter<string>();
 
   ngOnChanges(changes: SimpleChanges): void {
     this.paiementMode = this.ModePaiement;
@@ -55,6 +59,8 @@ export class TableauComponent implements OnInit, OnChanges {
     this.inputValueM = '';
     this.inputValueCanalA = '';
     this.inputValueCanalM = '';
+    this.inputValueTransId = '';
+    this.inputValueTransIdM = '';
     this.statuses = [
       { label: 'Payé', value: 'Payé' },
       { label: 'Echoué', value: 'Echoué' },
@@ -86,6 +92,8 @@ export class TableauComponent implements OnInit, OnChanges {
     this.inputValueM = '';
     this.inputValueCanalA = '';
     this.inputValueCanalM = '';
+    this.inputValueTransId = '';
+    this.inputValueTransIdM = '';
   }
 
   // DONNE LA COULEUR DU TAG EN FOCTION DE L'EXAMEN
@@ -132,6 +140,8 @@ export class TableauComponent implements OnInit, OnChanges {
     this.inputValueM = '';
     this.inputValueCanalA = '';
     this.inputValueCanalM = '';
+    this.inputValueTransId = '';
+    this.inputValueTransIdM = '';
   }
 
   addNewItem(value: boolean) {
@@ -151,8 +161,18 @@ export class TableauComponent implements OnInit, OnChanges {
     this.filterChangeCanalA.emit(this.inputValueCanalA);
   }
 
-  // search by canal liste airtime
+  // search by canal liste momo
   onInputChangeCanalM() {
     this.filterChangeCanalM.emit(this.inputValueCanalM);
+  }
+
+  // search by canal liste airtime
+  onInputChangeTransA() {
+    this.filterChangeTransA.emit(this.inputValueTransId);
+  }
+
+  // search by canal liste airtime
+  onInputChangeTransM() {
+    this.filterChangeTransM.emit(this.inputValueTransIdM);
   }
 }

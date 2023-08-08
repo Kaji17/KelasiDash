@@ -22,10 +22,13 @@ export class HistoryComponent implements OnInit, OnDestroy {
   totalPage: number;
   listeAirtime: any = [];
   listeMoMo: any = [];
+  listeAllAS: any = [];
+  listeAllMS: any = [];
   boolList: boolean = true;
   modePaiement: string = 'Airtime';
   filterValueMsidn: string;
   filterValueplateforme: string;
+  filterValueIdTrans: string;
 
   // SUSCRIPTION
   subscriptionSuccesA: Subscription;
@@ -44,14 +47,13 @@ export class HistoryComponent implements OnInit, OnDestroy {
     this.nbrFund = 300;
     this.initDataLocalStorage();
     this.refreshData();
-    this.getAllTransactionA({ pagination: true, page: 0, size: 5 });
+    this.getAllTransactionA({ pagination: true, page: 0, size: 10 });
     this.statuts = [{ name: 'Payé' }, { name: 'Rome' }];
   }
 
   ngOnDestroy(): void {
     this.subscriptionSuccesA.unsubscribe();
     this.subscriptionListA.unsubscribe();
-    // this.subscriptionListM.unsubscribe();
   }
 
   //FILTRER PAR ID TRANSAC
@@ -226,44 +228,57 @@ export class HistoryComponent implements OnInit, OnDestroy {
     return value.toString().padStart(length, '0');
   }
 
+  // Gerer le chargement de donnée lors du changement de place
   gerePage(value: any) {
     // this.getAllTransactionA(value);
     if (this.boolList) {
       // this.getAllTransactionA(value);
-      console.log('value.size',value.size)
+      console.log('value.size', value.size);
       if (this.totalPage > value.size) {
-        if(!this.filterValueMsidn){
+        if (!this.filterValueMsidn) {
           // si le champs de recherche par plateforme est renseigné
-          if(this.filterValueplateforme.length>0){
+          if (this.filterValueplateforme) {
             value.canal = this.filterValueplateforme;
             console.log('objet a send', value);
             this.filtreByPlateforme(value);
-          }else{
-            this.getAllTransactionA(value)
+          } else {
+            this.getAllTransactionA(value);
           }
-        }else{
-          value.msisdn = this.filterValueMsidn
-          console.log('objet a send', value);
-          this.filtreByNumber(value)
+        } else {
+          value.msisdn = this.filterValueMsidn;
+          if (this.filterValueplateforme) {
+            value.canal = this.filterValueplateforme;
+            console.log('objet a send', value);
+            this.filtreByPlateforme(value);
+          } else {
+            console.log('objet a send', value);
+            this.filtreByNumber(value);
+          }
         }
       } else {
         console.log('element tableu inférieur');
       }
     } else {
       if (this.totalPage > value.size) {
-        if(!this.filterValueMsidn){
+        if (!this.filterValueMsidn) {
           // si le champs de recherche par plateforme est renseigné
-          if(this.filterValueplateforme.length>0){
+          if (this.filterValueplateforme) {
             value.canal = this.filterValueplateforme;
             console.log('objet a send', value);
             this.filtreByPlateforme(value);
-          }else{
-            this.getAllTransactionM(value)
+          } else {
+            this.getAllTransactionM(value);
           }
-        }else{
-          value.msisdn = this.filterValueMsidn
-          console.log('objet a send', value);
-          this.filtreByNumber(value)
+        } else {
+          value.msisdn = this.filterValueMsidn;
+          if (this.filterValueplateforme) {
+            value.canal = this.filterValueplateforme;
+            console.log('objet a send', value);
+            this.filtreByPlateforme(value);
+          } else {
+            console.log('objet a send', value);
+            this.filtreByNumber(value);
+          }
         }
       } else {
         console.log('element tableu inférieur');
@@ -271,8 +286,9 @@ export class HistoryComponent implements OnInit, OnDestroy {
     }
   }
 
+  // switch entre le tableau airtime et momo
   gereToogle(value: any) {
-    let obj = { pagination: true, page: 0, size: 5 };
+    let obj = { pagination: true, page: 0, size: 10 };
     this.boolList = value;
     console.log(this.boolList);
 
@@ -292,7 +308,6 @@ export class HistoryComponent implements OnInit, OnDestroy {
       ? (this.modePaiement = 'Airtime')
       : (this.modePaiement = 'MoMo');
   }
-
 
   // Formatage des different type de statu recuperer par l'API
   formateStatu(obj: []) {
@@ -367,7 +382,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
           e.action = 'CONCOURS';
           break;
         default:
-          e.action = 'TEST';
+          e.action = 'UNDEFINIED';
           break;
       }
     }
@@ -377,17 +392,29 @@ export class HistoryComponent implements OnInit, OnDestroy {
   // Transmission des valeur du input bidirectionnel
   onFilterChange(filterValue: string) {
     this.filterValueMsidn = filterValue;
-    let obj = { pagination: true, msisdn: filterValue, page: 0, size: 5 };
+    let obj: any = { pagination: true, msisdn: filterValue, page: 0, size: 10 };
     this.filtreByNumber(obj);
   }
 
   // Filtrage de la liste en fonction de la plateforme de souscription
   onFilterChangeP(filterValue: string) {
     this.filterValueplateforme = filterValue;
-    let obj = { pagination: true, canal: filterValue, page: 0, size: 5 };
+    let obj: any = { pagination: true, canal: filterValue, page: 0, size: 10 };
     this.filtreByPlateforme(obj);
   }
 
+  // Filtrage de la liste en fonction de la plateforme de souscription
+  onFilterChangeTransId(filterValue: string) {
+    this.filterValueIdTrans = filterValue;
+    // let obj:any = { pagination: true, transactionId: filterValue, page: 0, size: 10 };
+    let obj: any = {
+      pagination: true,
+      transactionId: filterValue,
+      page: 0,
+      size: 10,
+    };
+    this.filtreByIdTransaction(obj);
+  }
   // Filtrage de la liste en fonction du numéro
   filtreByNumber(obj: any) {
     switch (this.boolList) {
@@ -397,7 +424,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
         switch (longeur1) {
           case 0:
             console.log('Actualiser la liste normale');
-            this.getAllTransactionA({ pagination: true, page: 0, size: 5 });
+            this.getAllTransactionA({ pagination: true, page: 0, size: 10 });
             break;
           case 12:
             console.log('obkj', obj);
@@ -415,7 +442,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
         switch (longeur) {
           case 0:
             console.log('Actualiser la liste normale');
-            this.getAllTransactionM({ pagination: true, page: 0, size: 5 });
+            this.getAllTransactionM({ pagination: true, page: 0, size: 10 });
             break;
           case 12:
             this.getAllTransactionM(obj);
@@ -436,7 +463,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
         switch (this.filterValueplateforme) {
           case '':
             console.log('Actualiser la liste normale');
-            this.getAllTransactionA({ pagination: true, page: 0, size: 5 });
+            this.getAllTransactionA({ pagination: true, page: 0, size: 10 });
             break;
           case 'appmobile':
             this.getAllTransactionA(obj);
@@ -455,7 +482,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
         switch (this.filterValueplateforme) {
           case '':
             console.log('Actualiser la liste normale');
-            this.getAllTransactionM({ pagination: true, page: 0, size: 5 });
+            this.getAllTransactionM({ pagination: true, page: 0, size: 10 });
             break;
           case 'appmobile':
             this.getAllTransactionM(obj);
@@ -464,6 +491,46 @@ export class HistoryComponent implements OnInit, OnDestroy {
           case 'ussd':
             this.getAllTransactionM(obj);
             console.log('here we go filter momo by input');
+            break;
+        }
+        break;
+    }
+  }
+
+  // Filtrage de la liste en fonction de l'ID de transaction
+  filtreByIdTransaction(obj: any) {
+    switch (this.boolList) {
+      // Vérifie si on est sur la page airtime
+      case true:
+        let longeur1 = this.filterValueIdTrans.length;
+        switch (longeur1) {
+          case 0:
+            console.log('Actualiser la liste normale');
+            this.getAllTransactionA({ pagination: true, page: 0, size: 10 });
+            break;
+          case 24:
+            console.log('obkj', obj);
+            this.getAllTransactionA(obj);
+            console.log('here we go filter airtime by input');
+            break;
+        }
+        break;
+      default:
+        break;
+
+      // Vérifie si on est sur la page airtime
+      case false:
+        let longeur = this.filterValueIdTrans.length;
+        switch (longeur) {
+          case 0:
+            console.log('Actualiser la liste normale');
+            this.getAllTransactionM({ pagination: true, page: 0, size: 10 });
+            break;
+          case 24:
+            this.getAllTransactionM(obj);
+
+            // this.getTableFilter(filterValue, totalList,totalItems,obj)
+            console.log('here we go filter airtime by input');
             break;
         }
         break;

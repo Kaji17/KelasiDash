@@ -1,5 +1,4 @@
 <div class="max-w-[80%] m-auto">
-  <p>{{inputValueCanalA}}</p>
   <p-table
     [scrollable]="true"
     [tableStyle]="{ 'min-width': '75rem' }"
@@ -7,6 +6,7 @@
     [value]="LisTransaction"
     dataKey="id"
     selectionMode="single"
+    scrollHeight="800px"
     [loading]="loading"
     [globalFilterFields]="[
       'matricule',
@@ -49,14 +49,10 @@
     <ng-template pTemplate="header">
       <!-- HEADER POUR LES LABELS -->
       <tr>
-        <th>
+        <th pFrozenColumn>
           <div class="flex align-items-center">
             Matricule
-            <p-columnFilter
-              type="text"
-              field="matricule"
-              display="menu"
-            ></p-columnFilter>
+   
           </div>
         </th>
         <th>
@@ -65,29 +61,14 @@
             *ngIf="ModePaiement == 'Airtime'"
           >
             ID Trans
-            <p-columnFilter
-              type="text"
-              field="idTrans"
-              display="menu"
-            ></p-columnFilter>
           </div>
           <div class="flex align-items-center" *ngIf="ModePaiement == 'MoMo'">
             ID Trans
-            <p-columnFilter
-              type="text"
-              field="referenceId"
-              display="menu"
-            ></p-columnFilter>
           </div>
         </th>
         <th>
           <div class="flex align-items-center">
             Numéro
-            <p-columnFilter
-              type="text"
-              field="msisdn"
-              display="menu"
-            ></p-columnFilter>
           </div>
         </th>
         <th>
@@ -102,64 +83,19 @@
         </th>
         <th>
           <div class="flex align-items-center">
-            Examen
-            <p-columnFilter field="action" matchMode="equals" display="menu">
-              <ng-template
-                pTemplate="filter"
-                let-value
-                let-filter="filterCallback"
-              >
-                <p-dropdown
-                  [ngModel]="value"
-                  [options]="examens"
-                  (onChange)="filter($event.value)"
-                  placeholder="Any"
-                >
-                  <ng-template let-option pTemplate="item">
-                    <p-tag
-                      [value]="option.value"
-                      [severity]="getSeverity(option.label)"
-                    ></p-tag>
-                  </ng-template>
-                </p-dropdown>
-              </ng-template>
-            </p-columnFilter>
+            Examends
           </div>
         </th>
 
         <th>
           <div class="flex align-items-center">
             Plateforme
-            <p-columnFilter field="transactionFrom" matchMode="equals" display="menu">
-              <ng-template
-                pTemplate="filter"
-                let-value
-                let-filter="filterCallback"
-              >
-                <p-dropdown
-                  [ngModel]="value"
-                  [options]="device"
-                  (onChange)="filter($event.value)"
-                  placeholder="Any"
-                >
-                  <!-- <ng-template let-option pTemplate="item">
-                                        <p-tag [value]="option.value" [severity]="getSeverity(option.label)"></p-tag>
-                                    </ng-template> -->
-                </p-dropdown>
-              </ng-template>
-            </p-columnFilter>
           </div>
         </th>
 
         <th>
           <div class="flex align-items-center">
             Cout
-            <p-columnFilter
-              type="numeric"
-              field="amount"
-              display="menu"
-              currency="XOF"
-            ></p-columnFilter>
           </div>
         </th>
         <th>
@@ -194,7 +130,25 @@
       <tr>
         <th>
         </th>
-        <th>
+        <th *ngIf="ModePaiement == 'Airtime'">
+          <input
+            pInputText
+            type="text"
+            placeholder="Search Id Transaction"
+            class="w-full"
+            [(ngModel)]="inputValueTransId"
+            (input)="onInputChangeTransA()" 
+          />
+        </th>
+        <th *ngIf="ModePaiement == 'MoMo'">
+          <input
+            pInputText
+            type="text"
+            placeholder="Search Id Transaction"
+            class="w-full"
+            [(ngModel)]="inputValueTransIdM"
+            (input)="onInputChangeTransM()" 
+          />
         </th>
         <th  *ngIf="ModePaiement == 'Airtime'">
           <input
@@ -203,8 +157,7 @@
             placeholder="Search Phone"
             class="w-full"
             [(ngModel)]="inputValue"
-            (input)="onInputChange()"
-           
+            (input)="onInputChange()" 
           />
         </th>
         <th  *ngIf="ModePaiement == 'MoMo'">
@@ -215,18 +168,12 @@
             class="w-full"
             [(ngModel)]="inputValueM"
             (input)="onInputChangeM()"
-           
+            pTooltip="Ex :'242222222222'"
           />
         </th>
         <th>
         </th>
         <th>
-          <input
-            pInputText
-            type="text"
-            placeholder="Search Exam.."
-            class="w-full"
-          />
         </th>
         <th  *ngIf="ModePaiement == 'Airtime'">
           <input
@@ -236,6 +183,8 @@
             class="w-full"
             [(ngModel)]="inputValueCanalA"
             (input)="onInputChangeCanalA()"
+            pTooltip="'ussd' |  'appmobile'  "
+            tooltipEvent="focus"
           />
         </th>
         <th *ngIf="ModePaiement == 'MoMo'">
@@ -246,17 +195,12 @@
             class="w-full"
             [(ngModel)]="inputValueCanalM"
             (input)="onInputChangeCanalM()"
+            pTooltip="'ussd' |  'appmobile'"
           />
         </th>
         <th>
         </th>
         <th>
-          <input
-            pInputText
-            type="text"
-            placeholder="Search Status"
-            class="w-full"
-          />
         </th>
       </tr>
     </ng-template>
@@ -264,13 +208,13 @@
     <!-- BODY -->
     <ng-template pTemplate="body" let-transaction>
       <tr>
-        <td class=" w-[185px]">
+        <td class=" w-[185px]" pFrozenColumn>
           {{ transaction.matricule | uppercase }}
         </td>
-        <td class="" *ngIf="ModePaiement == 'Airtime'">
+        <td class="min-w-[270px]" *ngIf="ModePaiement == 'Airtime'">
           {{ transaction.transactionId }}
         </td>
-        <td class="" *ngIf="ModePaiement == 'MoMo'">
+        <td class="min-w-[270px]" *ngIf="ModePaiement == 'MoMo'">
           {{ transaction.referenceId }}
         </td>
         <td class="min-w-[185px]" *ngIf="ModePaiement == 'Airtime'">
@@ -279,7 +223,7 @@
         <td class="min-w-[185px]"  *ngIf="ModePaiement == 'MoMo'">
           {{ transaction.payer.partyId | telephone }}
         </td>
-        <td class="min-w-[260px]">
+        <td class="min-w-[205px]">
           {{ transaction.callbackDate | date : "dd/MM/yyyy HH:mm:ss" }}
         </td>
         <td class="text-center">

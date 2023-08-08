@@ -9,7 +9,7 @@
   </div>
 
   <!-- PREMIER BLOCK BLANC  -->
-  <section class="flex justify-center">
+  <!-- <section class="flex justify-center">
     <div
       class="w-[80%] h-[200px] bg-[#FFFFFF] rounded-lg drop-shadow-md mt-9 px-8 py-3 flex justify-evenly max-md:h-[21vh]"
       style="flex-direction: column"
@@ -21,7 +21,6 @@
       <div
         class="contentLevel grid grid-cols-4 gap-2 max-md:grid-rows-4 max-md:grid-cols-1 max-md:gap-2"
       >
-        <!-- GREEN  BAC-->
         <div class="flex flex-col max-md:flex-row-reverse">
           <div class="ligneniveau h-[4px] bg-[#39A74B] w-full"></div>
           <p
@@ -32,7 +31,6 @@
           <p class="text-[#8E98A8] max-md:min-w-fit">Transaction BAC</p>
         </div>
 
-        <!-- BLUE CEPE-->
         <div class="flex flex-col max-md:flex-row-reverse">
           <div class="ligneniveau h-[4px] bg-[#00A9E4] w-full"></div>
           <p
@@ -43,7 +41,6 @@
           <p class="text-[#8E98A8] max-md:min-w-fit">Transaction CEPE</p>
         </div>
 
-        <!-- RED BEPC-->
         <div class="flex flex-col max-md:flex-row-reverse">
           <div class="ligneniveau h-[4px] bg-[#EE6060] w-full"></div>
           <p
@@ -54,7 +51,6 @@
           <p class="text-[#8E98A8] max-md:min-w-fit">Transaction BEPC</p>
         </div>
 
-        <!-- YELLOW CONCOURS-->
         <div class="flex flex-col max-md:flex-row-reverse">
           <div class="ligneniveau h-[4px] bg-[#FFDC0E] w-full"></div>
           <p
@@ -66,7 +62,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- TABLEAU TRANSACTION -->
   <section class="w-full min-h-[75vh] bg-[#FFFFFF] mt-10 flex justify-center">
@@ -80,6 +76,8 @@
         (filterChangeM)="onFilterChange($event)"
         (filterChangeCanalA)="onFilterChangeP($event)"
         (filterChangeCanalM)="onFilterChangeP($event)"
+        (filterChangeTransA)="onFilterChangeTransId($event)"
+        (filterChangeTransM)="onFilterChangeTransId($event)"
         [ModePaiement]="modePaiement"
         (newItemEvent)="gereToogle($event)"
         class="mt-4"

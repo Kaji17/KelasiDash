@@ -6,10 +6,7 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.scss']
 })
-export class ProfilComponent implements OnInit{
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+export class ProfilComponent{
   oldP:string
   formSignUp!: FormGroup;
   change():void{
